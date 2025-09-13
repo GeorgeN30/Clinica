@@ -14,9 +14,11 @@ public class SpecialtyEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_specialty", nullable = false)
+    @Column(name = "id_specialty")
     private Long idSpecialty;
 
     @Column(name = "name_specialty", unique = true)
     private String nameSpecialty;
+
+
 }

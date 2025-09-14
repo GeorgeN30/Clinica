@@ -34,6 +34,11 @@ public class SpecialtyEntityRepository implements SpecialtyRepository {
     }
 
     @Override
+    public List<SpecialtyPublicResponseDto> getAllSpecialty() {
+        return this.specialtyMapper.toPublicDto(this.crudSpecialtyEntity.findAll());
+    }
+
+    @Override
     public SpecialtyResponseDto getById(long id) {
         return this.specialtyMapper.toDto(this.crudSpecialtyEntity.findById(id).orElse(null));
     }

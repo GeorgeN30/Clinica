@@ -24,12 +24,17 @@ public class SpecialtyController {
 
     @GetMapping
     public ResponseEntity<List<SpecialtyResponseDto>> findAll() {
-        return ResponseEntity.ok(specialtyService.findAll());
+        return ResponseEntity.ok(this.specialtyService.findAll());
     }
 
     @GetMapping("/name/{specialty}")
     public ResponseEntity<SpecialtyPublicResponseDto> getByName(@PathVariable String specialty) {
-        return ResponseEntity.ok(specialtyService.findByName(specialty));
+        return ResponseEntity.ok(this.specialtyService.findByName(specialty));
+    }
+
+    @GetMapping("/name")
+    public ResponseEntity<List<SpecialtyPublicResponseDto>> getAllSpecialty() {
+        return ResponseEntity.ok(this.specialtyService.getAllSpecialty());
     }
 
     @GetMapping("/id/{id}")

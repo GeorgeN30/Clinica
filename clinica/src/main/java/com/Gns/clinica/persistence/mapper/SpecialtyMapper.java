@@ -25,6 +25,7 @@ public interface SpecialtyMapper {
 
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
     SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity);
+    List<SpecialtyPublicResponseDto> toPublicDto(List<SpecialtyEntity> specialtyEntities);
 
     @InheritInverseConfiguration
     SpecialtyEntity toEntity(SpecialtyRequestDto specialtyRequestDto);

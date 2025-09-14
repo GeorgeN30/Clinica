@@ -26,6 +26,10 @@ public class SpecialtyService {
         return this.specialtyRepository.getSpecialtyByName(name);
     }
 
+    public List<SpecialtyPublicResponseDto> getAllSpecialty() {
+        return this.specialtyRepository.getAllSpecialty();
+    }
+
     public SpecialtyResponseDto findById(long id) {
         return this.specialtyRepository.getById(id);
     }

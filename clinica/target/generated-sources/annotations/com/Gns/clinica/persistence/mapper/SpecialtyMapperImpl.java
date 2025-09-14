@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-14T12:35:51-0500",
+    date = "2025-09-14T12:47:29-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -76,6 +76,20 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
         SpecialtyPublicResponseDto specialtyPublicResponseDto = new SpecialtyPublicResponseDto( nameSpecialty );
 
         return specialtyPublicResponseDto;
+    }
+
+    @Override
+    public List<SpecialtyPublicResponseDto> toPublicDto(List<SpecialtyEntity> specialtyEntities) {
+        if ( specialtyEntities == null ) {
+            return null;
+        }
+
+        List<SpecialtyPublicResponseDto> list = new ArrayList<SpecialtyPublicResponseDto>( specialtyEntities.size() );
+        for ( SpecialtyEntity specialtyEntity : specialtyEntities ) {
+            list.add( toPublicDto( specialtyEntity ) );
+        }
+
+        return list;
     }
 
     @Override

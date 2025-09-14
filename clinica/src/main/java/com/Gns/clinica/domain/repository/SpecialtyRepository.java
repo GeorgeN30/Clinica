@@ -8,8 +8,8 @@ import java.util.List;
 
 public interface SpecialtyRepository {
     List<SpecialtyResponseDto> getAll();
-    SpecialtyResponseDto getSpecialtyByName(String name);
+    SpecialtyPublicResponseDto getSpecialtyByName(String name);
     SpecialtyResponseDto getById(long id);
     SpecialtyRequestDto addSpecialty(SpecialtyRequestDto specialtyRequestDto);
-    SpecialtyPublicResponseDto updateSpecialty(long id, SpecialtyPublicResponseDto specialtyPublicResponseDto);
+    SpecialtyRequestDto updateSpecialty(long id, SpecialtyRequestDto SpecialtyRequestDto);
 }

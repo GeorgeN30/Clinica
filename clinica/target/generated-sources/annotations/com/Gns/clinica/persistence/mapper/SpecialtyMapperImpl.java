@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-13T23:46:11-0500",
+    date = "2025-09-14T12:35:51-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -49,21 +49,6 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
     }
 
     @Override
-    public SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity) {
-        if ( specialtyEntity == null ) {
-            return null;
-        }
-
-        String nameSpecialty = null;
-
-        nameSpecialty = specialtyEntity.getNameSpecialty();
-
-        SpecialtyPublicResponseDto specialtyPublicResponseDto = new SpecialtyPublicResponseDto( nameSpecialty );
-
-        return specialtyPublicResponseDto;
-    }
-
-    @Override
     public SpecialtyRequestDto toRequestDto(SpecialtyEntity specialtyEntity) {
         if ( specialtyEntity == null ) {
             return null;
@@ -76,6 +61,21 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
         SpecialtyRequestDto specialtyRequestDto = new SpecialtyRequestDto( nameSpecialty );
 
         return specialtyRequestDto;
+    }
+
+    @Override
+    public SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity) {
+        if ( specialtyEntity == null ) {
+            return null;
+        }
+
+        String nameSpecialty = null;
+
+        nameSpecialty = specialtyEntity.getNameSpecialty();
+
+        SpecialtyPublicResponseDto specialtyPublicResponseDto = new SpecialtyPublicResponseDto( nameSpecialty );
+
+        return specialtyPublicResponseDto;
     }
 
     @Override
@@ -92,11 +92,11 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
     }
 
     @Override
-    public void updateEntityFromDto(SpecialtyPublicResponseDto specialtyPublicResponseDto, SpecialtyEntity specialtyEntity) {
-        if ( specialtyPublicResponseDto == null ) {
+    public void updateEntityFromDto(SpecialtyRequestDto specialtyRequestDto, SpecialtyEntity specialtyEntity) {
+        if ( specialtyRequestDto == null ) {
             return;
         }
 
-        specialtyEntity.setNameSpecialty( specialtyPublicResponseDto.nameSpecialty() );
+        specialtyEntity.setNameSpecialty( specialtyRequestDto.nameSpecialty() );
     }
 }

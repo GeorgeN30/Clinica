@@ -22,7 +22,7 @@ public class SpecialtyService {
         return this.specialtyRepository.getAll();
     }
 
-    public SpecialtyResponseDto findByName(String name) {
+    public SpecialtyPublicResponseDto findByName(String name) {
         return this.specialtyRepository.getSpecialtyByName(name);
     }
 
@@ -34,7 +34,7 @@ public class SpecialtyService {
         return this.specialtyRepository.addSpecialty(specialtyRequestDto);
     }
 
-    public SpecialtyPublicResponseDto updateSpecialty(long id, SpecialtyPublicResponseDto specialtyPublicResponseDto) {
-        return this.specialtyRepository.updateSpecialty(id, specialtyPublicResponseDto);
+    public SpecialtyRequestDto updateSpecialty(long id, SpecialtyRequestDto specialtyRequestDto) {
+        return this.specialtyRepository.updateSpecialty(id, specialtyRequestDto);
     }
 }

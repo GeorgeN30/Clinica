@@ -15,20 +15,22 @@ import java.util.List;
 public interface SpecialtyMapper {
 
     @Mapping(source = "idSpecialty", target = "idSpecialty")
-
+    @Mapping(source = "nameSpecialty", target = "nameSpecialty")
     SpecialtyResponseDto toDto(SpecialtyEntity specialtyEntity);
     List<SpecialtyResponseDto> toDto(List<SpecialtyEntity> specialtyEntities);
 
-    @Mapping(source = "nameSpecialty", target = "nameSpecialty")
-    SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity);
+
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
     SpecialtyRequestDto toRequestDto(SpecialtyEntity specialtyEntity);
+
+    @Mapping(source = "nameSpecialty", target = "nameSpecialty")
+    SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity);
 
     @InheritInverseConfiguration
     SpecialtyEntity toEntity(SpecialtyRequestDto specialtyRequestDto);
 
 
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
-    void updateEntityFromDto(SpecialtyPublicResponseDto specialtyPublicResponseDto, @MappingTarget SpecialtyEntity specialtyEntity);
+    void updateEntityFromDto(SpecialtyRequestDto specialtyRequestDto, @MappingTarget SpecialtyEntity specialtyEntity);
 
 }

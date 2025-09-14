@@ -29,8 +29,8 @@ public class SpecialtyEntityRepository implements SpecialtyRepository {
     }
 
     @Override
-    public SpecialtyResponseDto getSpecialtyByName(String name) {
-        return this.specialtyMapper.toDto(this.crudSpecialtyEntity.findByNameSpecialty(name));
+    public SpecialtyPublicResponseDto getSpecialtyByName(String name) {
+        return this.specialtyMapper.toPublicDto(this.crudSpecialtyEntity.findByNameSpecialty(name));
     }
 
     @Override
@@ -45,12 +45,12 @@ public class SpecialtyEntityRepository implements SpecialtyRepository {
     }
 
     @Override
-    public SpecialtyPublicResponseDto updateSpecialty(long id, SpecialtyPublicResponseDto specialtyPublicResponseDto) {
+    public SpecialtyRequestDto updateSpecialty(long id, SpecialtyRequestDto specialtyRequestDto) {
         SpecialtyEntity specialtyEntity = this.crudSpecialtyEntity.findById(id).orElse(null);
-        this.specialtyMapper.updateEntityFromDto(specialtyPublicResponseDto, specialtyEntity);
+        this.specialtyMapper.updateEntityFromDto(specialtyRequestDto, specialtyEntity);
         if (specialtyEntity == null) {
             return null;
         }
-        return this.specialtyMapper.toPublicDto(crudSpecialtyEntity.save(specialtyEntity));
+        return this.specialtyMapper.toRequestDto(crudSpecialtyEntity.save(specialtyEntity));
     }
 }

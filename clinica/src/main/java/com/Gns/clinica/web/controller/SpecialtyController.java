@@ -28,7 +28,7 @@ public class SpecialtyController {
     }
 
     @GetMapping("/name/{specialty}")
-    public ResponseEntity<SpecialtyResponseDto> getByName(@PathVariable String specialty) {
+    public ResponseEntity<SpecialtyPublicResponseDto> getByName(@PathVariable String specialty) {
         return ResponseEntity.ok(specialtyService.findByName(specialty));
     }
 
@@ -43,7 +43,7 @@ public class SpecialtyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SpecialtyPublicResponseDto> update(@PathVariable long id, @RequestBody SpecialtyPublicResponseDto specialtyPublicResponseDto) {
-        return ResponseEntity.ok(this.specialtyService.updateSpecialty(id, specialtyPublicResponseDto));
+    public ResponseEntity<SpecialtyRequestDto> update(@PathVariable long id, @RequestBody SpecialtyRequestDto specialtyRequestDto) {
+        return ResponseEntity.ok(this.specialtyService.updateSpecialty(id, specialtyRequestDto));
     }
 }

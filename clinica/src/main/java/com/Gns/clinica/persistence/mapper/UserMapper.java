@@ -26,6 +26,8 @@ public interface UserMapper {
     @Mapping(source = "phone", target = "phone")
     @Mapping(source = "role", target = "role")
     @Mapping(source = "status", target = "status")
+    @Mapping(source = "disabled", target = "disabled")
+    @Mapping(source = "locked", target = "locked")
     @Mapping(source = "specialties",target = "idSpecialty")
     UserDtoRequest toRequestDto(UserEntity entity);
 
@@ -49,7 +51,10 @@ public interface UserMapper {
     @Mapping(source = "email", target = "email")
     @Mapping(source = "idSpecialty",target = "specialties")
     void updateEntityFromDto(UpdateUserDto updateUserDto, @MappingTarget UserEntity userEntity);
+
     @Mapping(source = "status", target = "status")
+    @Mapping(source = "disabled", target = "disabled")
+    @Mapping(source = "locked", target = "locked")
     void updateStatusEntityFromDto(UpdateUserStatusDto  updateUserStatusDto, @MappingTarget UserEntity userEntity);
 
     default Long map(SpecialtyEntity specialty) {

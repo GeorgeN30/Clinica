@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-13T12:51:20-0500",
+    date = "2025-09-13T19:01:47-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -36,6 +36,8 @@ public class UserMapperImpl implements UserMapper {
         String phone = null;
         Role role = null;
         UserStatus status = null;
+        Boolean disabled = null;
+        Boolean locked = null;
         Long idSpecialty = null;
 
         dni = entity.getDni();
@@ -46,9 +48,11 @@ public class UserMapperImpl implements UserMapper {
         phone = entity.getPhone();
         role = entity.getRole();
         status = entity.getStatus();
+        disabled = entity.getDisabled();
+        locked = entity.getLocked();
         idSpecialty = map( entity.getSpecialties() );
 
-        UserDtoRequest userDtoRequest = new UserDtoRequest( dni, firstName, lastName, email, password, phone, role, status, idSpecialty );
+        UserDtoRequest userDtoRequest = new UserDtoRequest( dni, firstName, lastName, email, password, phone, role, status, disabled, locked, idSpecialty );
 
         return userDtoRequest;
     }
@@ -69,6 +73,8 @@ public class UserMapperImpl implements UserMapper {
         userEntity.phone( userDtoRequest.phone() );
         userEntity.role( userDtoRequest.role() );
         userEntity.status( userDtoRequest.status() );
+        userEntity.disabled( userDtoRequest.disabled() );
+        userEntity.locked( userDtoRequest.locked() );
         userEntity.specialties( map( userDtoRequest.idSpecialty() ) );
 
         return userEntity.build();
@@ -140,6 +146,8 @@ public class UserMapperImpl implements UserMapper {
         else {
             userEntity.setStatus( null );
         }
+        userEntity.setDisabled( updateUserStatusDto.disabled() );
+        userEntity.setLocked( updateUserStatusDto.locked() );
     }
 
     protected SpecialtyDtoResponse specialtyEntityToSpecialtyDtoResponse(SpecialtyEntity specialtyEntity) {

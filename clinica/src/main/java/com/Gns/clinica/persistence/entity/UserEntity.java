@@ -44,6 +44,12 @@ public class UserEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
+    @Column(nullable = false, columnDefinition = "TINYINT")
+    private Boolean disabled;
+
+    @Column(nullable = false, columnDefinition = "TINYINT")
+    private Boolean locked;
+
     @ManyToOne
     @JoinColumn(name = "id_specialty")
     private SpecialtyEntity specialties;

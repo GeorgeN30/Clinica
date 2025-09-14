@@ -1,4 +1,4 @@
-package com.Gns.clinica.web.exception;
+package com.Gns.clinica.web.controller;
 
 import com.Gns.clinica.domain.dto.request.UserDtoRequest;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
@@ -16,16 +16,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
-    private final CrudUserEntity crudUserEntity;
+
 
     @Autowired
-    public UserController(UserService userService, CrudUserEntity crudUserEntity) {
+    public UserController(UserService userService) {
         this.userService = userService;
-
-        this.crudUserEntity = crudUserEntity;
     }
 
     @PostMapping
@@ -34,12 +32,6 @@ public class UserController {
                 .status(HttpStatus.CREATED)
                 .body(this.userService.addPatient(userDtoRequest));
     }
-
-    @GetMapping("/ja")
-    public List<UserEntity> getUsers() {
-        return this.crudUserEntity.findAll();
-    }
-
 
     @PostMapping("/staff")
     public ResponseEntity<UserDtoRequest> addUser(@RequestBody UserDtoRequest userDtoRequest) {

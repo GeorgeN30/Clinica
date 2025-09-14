@@ -14,6 +14,8 @@ public record UserDtoRequest(
         String phone,
         Role role,
         UserStatus status,
+        Boolean disabled,
+        Boolean locked,
         Long idSpecialty
 ) {
 

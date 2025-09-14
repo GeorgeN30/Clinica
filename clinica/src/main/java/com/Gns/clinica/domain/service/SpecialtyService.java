@@ -1,6 +1,8 @@
 package com.Gns.clinica.domain.service;
 
-import com.Gns.clinica.domain.dto.SpecialtyDto;
+import com.Gns.clinica.domain.dto.request.SpecialtyRequestDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyPublicResponseDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyResponseDto;
 import com.Gns.clinica.domain.repository.SpecialtyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,23 +18,23 @@ public class SpecialtyService {
         this.specialtyRepository = specialtyRepository;
     }
 
-    public List<SpecialtyDto> findAll() {
+    public List<SpecialtyResponseDto> findAll() {
         return this.specialtyRepository.getAll();
     }
 
-    public SpecialtyDto findByName(String name) {
+    public SpecialtyResponseDto findByName(String name) {
         return this.specialtyRepository.getSpecialtyByName(name);
     }
 
-    public SpecialtyDto findById(long id) {
+    public SpecialtyResponseDto findById(long id) {
         return this.specialtyRepository.getById(id);
     }
 
-    public SpecialtyDto addSpecialty(SpecialtyDto specialtyDto) {
-        return this.specialtyRepository.addSpecialty(specialtyDto);
+    public SpecialtyRequestDto addSpecialty(SpecialtyRequestDto specialtyRequestDto) {
+        return this.specialtyRepository.addSpecialty(specialtyRequestDto);
     }
 
-    public SpecialtyDto updateSpecialty(long id, SpecialtyDto specialtyDto) {
-        return this.specialtyRepository.updateSpecialty(id, specialtyDto);
+    public SpecialtyPublicResponseDto updateSpecialty(long id, SpecialtyPublicResponseDto specialtyPublicResponseDto) {
+        return this.specialtyRepository.updateSpecialty(id, specialtyPublicResponseDto);
     }
 }

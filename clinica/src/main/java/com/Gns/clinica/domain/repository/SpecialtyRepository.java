@@ -1,13 +1,15 @@
 package com.Gns.clinica.domain.repository;
 
-import com.Gns.clinica.domain.dto.SpecialtyDto;
+import com.Gns.clinica.domain.dto.request.SpecialtyRequestDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyPublicResponseDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyResponseDto;
 
 import java.util.List;
 
 public interface SpecialtyRepository {
-    List<SpecialtyDto> getAll();
-    SpecialtyDto getSpecialtyByName(String name);
-    SpecialtyDto getById(long id);
-    SpecialtyDto addSpecialty(SpecialtyDto specialtyDto);
-    SpecialtyDto updateSpecialty(long id, SpecialtyDto specialtyDto);
+    List<SpecialtyResponseDto> getAll();
+    SpecialtyResponseDto getSpecialtyByName(String name);
+    SpecialtyResponseDto getById(long id);
+    SpecialtyRequestDto addSpecialty(SpecialtyRequestDto specialtyRequestDto);
+    SpecialtyPublicResponseDto updateSpecialty(long id, SpecialtyPublicResponseDto specialtyPublicResponseDto);
 }

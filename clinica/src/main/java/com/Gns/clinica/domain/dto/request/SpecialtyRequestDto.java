@@ -1,6 +1,6 @@
 package com.Gns.clinica.domain.dto.request;
 
-public record SpecialtyDtoRequest(
+public record SpecialtyRequestDto(
         String nameSpecialty
 ) {
 }

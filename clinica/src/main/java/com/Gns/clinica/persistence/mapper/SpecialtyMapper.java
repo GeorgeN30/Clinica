@@ -1,6 +1,8 @@
 package com.Gns.clinica.persistence.mapper;
 
-import com.Gns.clinica.domain.dto.SpecialtyDto;
+import com.Gns.clinica.domain.dto.request.SpecialtyRequestDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyPublicResponseDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyResponseDto;
 import com.Gns.clinica.persistence.entity.SpecialtyEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
@@ -13,15 +15,20 @@ import java.util.List;
 public interface SpecialtyMapper {
 
     @Mapping(source = "idSpecialty", target = "idSpecialty")
+
+    SpecialtyResponseDto toDto(SpecialtyEntity specialtyEntity);
+    List<SpecialtyResponseDto> toDto(List<SpecialtyEntity> specialtyEntities);
+
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
-    SpecialtyDto toDto(SpecialtyEntity specialtyEntity);
-    List<SpecialtyDto> toDto(List<SpecialtyEntity> specialtyEntities);
+    SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity);
+    @Mapping(source = "nameSpecialty", target = "nameSpecialty")
+    SpecialtyRequestDto toRequestDto(SpecialtyEntity specialtyEntity);
 
     @InheritInverseConfiguration
-    SpecialtyEntity toEntity(SpecialtyDto specialtyDto);
+    SpecialtyEntity toEntity(SpecialtyRequestDto specialtyRequestDto);
 
-    @Mapping(source = "idSpecialty", target = "idSpecialty")
+
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
-    void updateEntityFromDto(SpecialtyDto specialtyDto, @MappingTarget SpecialtyEntity specialtyEntity);
+    void updateEntityFromDto(SpecialtyPublicResponseDto specialtyPublicResponseDto, @MappingTarget SpecialtyEntity specialtyEntity);
 
 }

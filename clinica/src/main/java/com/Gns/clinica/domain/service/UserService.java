@@ -1,9 +1,9 @@
 package com.Gns.clinica.domain.service;
 
-import com.Gns.clinica.domain.dto.request.UserDtoRequest;
+import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
-import com.Gns.clinica.domain.dto.response.UserDtoResponse;
+import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,39 +20,39 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public UserDtoRequest addPatient(UserDtoRequest userDtoRequest) {
-        return this.userRepository.addPatient(userDtoRequest);
+    public UserRequestDto addPatient(UserRequestDto userRequestDto) {
+        return this.userRepository.addPatient(userRequestDto);
     }
 
-    public UserDtoRequest addUser(UserDtoRequest userDtoRequest) {
-        return this.userRepository.addUser(userDtoRequest);
+    public UserRequestDto addUser(UserRequestDto userRequestDto) {
+        return this.userRepository.addUser(userRequestDto);
     }
 
-    public List<UserDtoResponse> getAll(){
+    public List<UserResponseDto> getAll(){
         return this.userRepository.getAll();
     }
 
-    public List<UserDtoResponse> getAllByRolPatient(Role role){
+    public List<UserResponseDto> getAllByRolPatient(Role role){
         return this.userRepository.getAllByRolePatient(role);
     }
 
-    public List<UserDtoResponse> getAllByRolDoctor(Role role){
+    public List<UserResponseDto> getAllByRolDoctor(Role role){
         return this.userRepository.getAllByRoleDoctor(role);
     }
 
-    public List<UserDtoResponse> getAllByRolAdmin(Role role){
+    public List<UserResponseDto> getAllByRolAdmin(Role role){
         return this.userRepository.getAllByRoleAdmin(role);
     }
 
-    public UserDtoResponse getFirstByDni(String dni) {
+    public UserResponseDto getFirstByDni(String dni) {
         return this.userRepository.getFirstByDni(dni);
     }
 
-    public UserDtoRequest updateUser(String dni, UpdateUserDto updateUserDto) {
+    public UserRequestDto updateUser(String dni, UpdateUserDto updateUserDto) {
         return this.userRepository.updateUser(dni, updateUserDto);
     }
 
-    public UserDtoRequest updateUserStatus(String dni, UpdateUserStatusDto updateUserStatusDto) {
+    public UserRequestDto updateUserStatus(String dni, UpdateUserStatusDto updateUserStatusDto) {
         return this.userRepository.updateUserStatus(dni, updateUserStatusDto);
     }
 }

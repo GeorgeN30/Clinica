@@ -1,21 +1,21 @@
 package com.Gns.clinica.domain.repository;
 
-import com.Gns.clinica.domain.dto.request.UserDtoRequest;
+import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
-import com.Gns.clinica.domain.dto.response.UserDtoResponse;
+import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 
 import java.util.List;
 
 public interface UserRepository {
-    UserDtoRequest addPatient(UserDtoRequest  userDtoRequest);
-    UserDtoRequest addUser(UserDtoRequest  userDtoRequest);
-    List<UserDtoResponse> getAll();
-    List<UserDtoResponse> getAllByRolePatient(Role role);
-    List<UserDtoResponse> getAllByRoleDoctor(Role role);
-    List<UserDtoResponse> getAllByRoleAdmin(Role role);
-    UserDtoResponse getFirstByDni(String dni);
-    UserDtoRequest updateUser(String dni, UpdateUserDto updateUserDto);
-    UserDtoRequest updateUserStatus(String dni, UpdateUserStatusDto updateUserStatusDto);
+    UserRequestDto addPatient(UserRequestDto userRequestDto);
+    UserRequestDto addUser(UserRequestDto userRequestDto);
+    List<UserResponseDto> getAll();
+    List<UserResponseDto> getAllByRolePatient(Role role);
+    List<UserResponseDto> getAllByRoleDoctor(Role role);
+    List<UserResponseDto> getAllByRoleAdmin(Role role);
+    UserResponseDto getFirstByDni(String dni);
+    UserRequestDto updateUser(String dni, UpdateUserDto updateUserDto);
+    UserRequestDto updateUserStatus(String dni, UpdateUserStatusDto updateUserStatusDto);
 }

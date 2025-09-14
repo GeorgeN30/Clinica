@@ -1,6 +1,8 @@
 package com.Gns.clinica.persistence.mapper;
 
-import com.Gns.clinica.domain.dto.SpecialtyDto;
+import com.Gns.clinica.domain.dto.request.SpecialtyRequestDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyPublicResponseDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyResponseDto;
 import com.Gns.clinica.persistence.entity.SpecialtyEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,38 +11,36 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-13T19:52:48-0500",
+    date = "2025-09-13T23:46:11-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
 public class SpecialtyMapperImpl implements SpecialtyMapper {
 
     @Override
-    public SpecialtyDto toDto(SpecialtyEntity specialtyEntity) {
+    public SpecialtyResponseDto toDto(SpecialtyEntity specialtyEntity) {
         if ( specialtyEntity == null ) {
             return null;
         }
 
-        String idSpecialty = null;
+        Long idSpecialty = null;
         String nameSpecialty = null;
 
-        if ( specialtyEntity.getIdSpecialty() != null ) {
-            idSpecialty = String.valueOf( specialtyEntity.getIdSpecialty() );
-        }
+        idSpecialty = specialtyEntity.getIdSpecialty();
         nameSpecialty = specialtyEntity.getNameSpecialty();
 
-        SpecialtyDto specialtyDto = new SpecialtyDto( idSpecialty, nameSpecialty );
+        SpecialtyResponseDto specialtyResponseDto = new SpecialtyResponseDto( idSpecialty, nameSpecialty );
 
-        return specialtyDto;
+        return specialtyResponseDto;
     }
 
     @Override
-    public List<SpecialtyDto> toDto(List<SpecialtyEntity> specialtyEntities) {
+    public List<SpecialtyResponseDto> toDto(List<SpecialtyEntity> specialtyEntities) {
         if ( specialtyEntities == null ) {
             return null;
         }
 
-        List<SpecialtyDto> list = new ArrayList<SpecialtyDto>( specialtyEntities.size() );
+        List<SpecialtyResponseDto> list = new ArrayList<SpecialtyResponseDto>( specialtyEntities.size() );
         for ( SpecialtyEntity specialtyEntity : specialtyEntities ) {
             list.add( toDto( specialtyEntity ) );
         }
@@ -49,33 +49,54 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
     }
 
     @Override
-    public SpecialtyEntity toEntity(SpecialtyDto specialtyDto) {
-        if ( specialtyDto == null ) {
+    public SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity) {
+        if ( specialtyEntity == null ) {
+            return null;
+        }
+
+        String nameSpecialty = null;
+
+        nameSpecialty = specialtyEntity.getNameSpecialty();
+
+        SpecialtyPublicResponseDto specialtyPublicResponseDto = new SpecialtyPublicResponseDto( nameSpecialty );
+
+        return specialtyPublicResponseDto;
+    }
+
+    @Override
+    public SpecialtyRequestDto toRequestDto(SpecialtyEntity specialtyEntity) {
+        if ( specialtyEntity == null ) {
+            return null;
+        }
+
+        String nameSpecialty = null;
+
+        nameSpecialty = specialtyEntity.getNameSpecialty();
+
+        SpecialtyRequestDto specialtyRequestDto = new SpecialtyRequestDto( nameSpecialty );
+
+        return specialtyRequestDto;
+    }
+
+    @Override
+    public SpecialtyEntity toEntity(SpecialtyRequestDto specialtyRequestDto) {
+        if ( specialtyRequestDto == null ) {
             return null;
         }
 
         SpecialtyEntity.SpecialtyEntityBuilder specialtyEntity = SpecialtyEntity.builder();
 
-        if ( specialtyDto.idSpecialty() != null ) {
-            specialtyEntity.idSpecialty( Long.parseLong( specialtyDto.idSpecialty() ) );
-        }
-        specialtyEntity.nameSpecialty( specialtyDto.nameSpecialty() );
+        specialtyEntity.nameSpecialty( specialtyRequestDto.nameSpecialty() );
 
         return specialtyEntity.build();
     }
 
     @Override
-    public void updateEntityFromDto(SpecialtyDto specialtyDto, SpecialtyEntity specialtyEntity) {
-        if ( specialtyDto == null ) {
+    public void updateEntityFromDto(SpecialtyPublicResponseDto specialtyPublicResponseDto, SpecialtyEntity specialtyEntity) {
+        if ( specialtyPublicResponseDto == null ) {
             return;
         }
 
-        if ( specialtyDto.idSpecialty() != null ) {
-            specialtyEntity.setIdSpecialty( Long.parseLong( specialtyDto.idSpecialty() ) );
-        }
-        else {
-            specialtyEntity.setIdSpecialty( null );
-        }
-        specialtyEntity.setNameSpecialty( specialtyDto.nameSpecialty() );
+        specialtyEntity.setNameSpecialty( specialtyPublicResponseDto.nameSpecialty() );
     }
 }

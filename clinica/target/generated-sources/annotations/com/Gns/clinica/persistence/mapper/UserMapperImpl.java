@@ -1,10 +1,10 @@
 package com.Gns.clinica.persistence.mapper;
 
-import com.Gns.clinica.domain.dto.request.UserDtoRequest;
+import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
-import com.Gns.clinica.domain.dto.response.SpecialtyDtoResponse;
-import com.Gns.clinica.domain.dto.response.UserDtoResponse;
+import com.Gns.clinica.domain.dto.response.SpecialtyPublicResponseDto;
+import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.enums.UserStatus;
 import com.Gns.clinica.persistence.entity.SpecialtyEntity;
@@ -16,14 +16,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-13T19:01:47-0500",
+    date = "2025-09-13T23:22:20-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public UserDtoRequest toRequestDto(UserEntity entity) {
+    public UserRequestDto toRequestDto(UserEntity entity) {
         if ( entity == null ) {
             return null;
         }
@@ -52,36 +52,36 @@ public class UserMapperImpl implements UserMapper {
         locked = entity.getLocked();
         idSpecialty = map( entity.getSpecialties() );
 
-        UserDtoRequest userDtoRequest = new UserDtoRequest( dni, firstName, lastName, email, password, phone, role, status, disabled, locked, idSpecialty );
+        UserRequestDto userRequestDto = new UserRequestDto( dni, firstName, lastName, email, password, phone, role, status, disabled, locked, idSpecialty );
 
-        return userDtoRequest;
+        return userRequestDto;
     }
 
     @Override
-    public UserEntity toEntity(UserDtoRequest userDtoRequest) {
-        if ( userDtoRequest == null ) {
+    public UserEntity toEntity(UserRequestDto userRequestDto) {
+        if ( userRequestDto == null ) {
             return null;
         }
 
         UserEntity.UserEntityBuilder userEntity = UserEntity.builder();
 
-        userEntity.dni( userDtoRequest.dni() );
-        userEntity.firstName( userDtoRequest.firstName() );
-        userEntity.lastName( userDtoRequest.lastName() );
-        userEntity.email( userDtoRequest.email() );
-        userEntity.password( userDtoRequest.password() );
-        userEntity.phone( userDtoRequest.phone() );
-        userEntity.role( userDtoRequest.role() );
-        userEntity.status( userDtoRequest.status() );
-        userEntity.disabled( userDtoRequest.disabled() );
-        userEntity.locked( userDtoRequest.locked() );
-        userEntity.specialties( map( userDtoRequest.idSpecialty() ) );
+        userEntity.dni( userRequestDto.dni() );
+        userEntity.firstName( userRequestDto.firstName() );
+        userEntity.lastName( userRequestDto.lastName() );
+        userEntity.email( userRequestDto.email() );
+        userEntity.password( userRequestDto.password() );
+        userEntity.phone( userRequestDto.phone() );
+        userEntity.role( userRequestDto.role() );
+        userEntity.status( userRequestDto.status() );
+        userEntity.disabled( userRequestDto.disabled() );
+        userEntity.locked( userRequestDto.locked() );
+        userEntity.specialties( map( userRequestDto.idSpecialty() ) );
 
         return userEntity.build();
     }
 
     @Override
-    public UserDtoResponse toResponseDto(UserEntity userEntity) {
+    public UserResponseDto toResponseDto(UserEntity userEntity) {
         if ( userEntity == null ) {
             return null;
         }
@@ -92,7 +92,7 @@ public class UserMapperImpl implements UserMapper {
         String email = null;
         String phone = null;
         Role role = null;
-        SpecialtyDtoResponse specialties = null;
+        SpecialtyPublicResponseDto specialties = null;
 
         dni = userEntity.getDni();
         firstName = userEntity.getFirstName();
@@ -100,20 +100,20 @@ public class UserMapperImpl implements UserMapper {
         email = userEntity.getEmail();
         phone = userEntity.getPhone();
         role = userEntity.getRole();
-        specialties = specialtyEntityToSpecialtyDtoResponse( userEntity.getSpecialties() );
+        specialties = specialtyEntityToSpecialtyPublicResponseDto( userEntity.getSpecialties() );
 
-        UserDtoResponse userDtoResponse = new UserDtoResponse( dni, firstName, lastName, email, phone, role, specialties );
+        UserResponseDto userResponseDto = new UserResponseDto( dni, firstName, lastName, email, phone, role, specialties );
 
-        return userDtoResponse;
+        return userResponseDto;
     }
 
     @Override
-    public List<UserDtoResponse> toResponseDto(List<UserEntity> userEntities) {
+    public List<UserResponseDto> toResponseDto(List<UserEntity> userEntities) {
         if ( userEntities == null ) {
             return null;
         }
 
-        List<UserDtoResponse> list = new ArrayList<UserDtoResponse>( userEntities.size() );
+        List<UserResponseDto> list = new ArrayList<UserResponseDto>( userEntities.size() );
         for ( UserEntity userEntity : userEntities ) {
             list.add( toResponseDto( userEntity ) );
         }
@@ -150,19 +150,17 @@ public class UserMapperImpl implements UserMapper {
         userEntity.setLocked( updateUserStatusDto.locked() );
     }
 
-    protected SpecialtyDtoResponse specialtyEntityToSpecialtyDtoResponse(SpecialtyEntity specialtyEntity) {
+    protected SpecialtyPublicResponseDto specialtyEntityToSpecialtyPublicResponseDto(SpecialtyEntity specialtyEntity) {
         if ( specialtyEntity == null ) {
             return null;
         }
 
-        Long idSpecialty = null;
         String nameSpecialty = null;
 
-        idSpecialty = specialtyEntity.getIdSpecialty();
         nameSpecialty = specialtyEntity.getNameSpecialty();
 
-        SpecialtyDtoResponse specialtyDtoResponse = new SpecialtyDtoResponse( idSpecialty, nameSpecialty );
+        SpecialtyPublicResponseDto specialtyPublicResponseDto = new SpecialtyPublicResponseDto( nameSpecialty );
 
-        return specialtyDtoResponse;
+        return specialtyPublicResponseDto;
     }
 }

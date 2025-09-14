@@ -1,22 +1,17 @@
-package com.Gns.clinica.domain.dto.request;
+package com.Gns.clinica.domain.dto.response;
+
 
 import com.Gns.clinica.domain.enums.Role;
-import com.Gns.clinica.domain.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public record UserDtoRequest(
+public record UserResponseDto(
         String dni,
         String firstName,
         String lastName,
         String email,
-        String password,
         String phone,
         Role role,
-        UserStatus status,
-        Boolean disabled,
-        Boolean locked,
-        Long idSpecialty
+        SpecialtyPublicResponseDto specialties
 ) {
-
 }

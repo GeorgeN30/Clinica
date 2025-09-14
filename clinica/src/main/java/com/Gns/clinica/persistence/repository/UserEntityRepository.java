@@ -1,9 +1,9 @@
 package com.Gns.clinica.persistence.repository;
 
-import com.Gns.clinica.domain.dto.request.UserDtoRequest;
+import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
-import com.Gns.clinica.domain.dto.response.UserDtoResponse;
+import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.enums.UserStatus;
 import com.Gns.clinica.domain.repository.UserRepository;
@@ -27,53 +27,53 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
-    public UserDtoRequest addPatient(UserDtoRequest userDtoRequest) {
-        UserEntity userEntity = this.userMapper.toEntity(userDtoRequest);
+    public UserRequestDto addPatient(UserRequestDto userRequestDto) {
+        UserEntity userEntity = this.userMapper.toEntity(userRequestDto);
         userEntity.setStatus(UserStatus.ACTIVE);
         userEntity.setRole(Role.PATIENT);
         return this.userMapper.toRequestDto(this.crudUserEntity.save(userEntity));
     }
 
     @Override
-    public UserDtoRequest addUser(UserDtoRequest userDtoRequest) {
-        UserEntity userEntity = this.userMapper.toEntity(userDtoRequest);
+    public UserRequestDto addUser(UserRequestDto userRequestDto) {
+        UserEntity userEntity = this.userMapper.toEntity(userRequestDto);
         return this.userMapper.toRequestDto(this.crudUserEntity.save(userEntity));
     }
 
     @Override
-    public List<UserDtoResponse> getAll() {
+    public List<UserResponseDto> getAll() {
         return this.userMapper.toResponseDto(this.crudUserEntity.findAll());
     }
 
     @Override
-    public List<UserDtoResponse> getAllByRolePatient(Role role) {
+    public List<UserResponseDto> getAllByRolePatient(Role role) {
         return this.userMapper.toResponseDto(this.crudUserEntity.findAllByRole(Role.PATIENT));
     }
 
     @Override
-    public List<UserDtoResponse> getAllByRoleDoctor(Role role) {
+    public List<UserResponseDto> getAllByRoleDoctor(Role role) {
         return this.userMapper.toResponseDto(this.crudUserEntity.findAllByRole(Role.DOCTOR));
     }
 
     @Override
-    public List<UserDtoResponse> getAllByRoleAdmin(Role role) {
+    public List<UserResponseDto> getAllByRoleAdmin(Role role) {
         return this.userMapper.toResponseDto(this.crudUserEntity.findAllByRole(Role.ADMIN));
     }
 
     @Override
-    public UserDtoResponse getFirstByDni(String dni) {
+    public UserResponseDto getFirstByDni(String dni) {
         return this.userMapper.toResponseDto(this.crudUserEntity.findFirstByDni(dni));
     }
 
     @Override
-    public UserDtoRequest updateUser(String dni, UpdateUserDto updateUserDto) {
+    public UserRequestDto updateUser(String dni, UpdateUserDto updateUserDto) {
         UserEntity userEntity = this.crudUserEntity.findFirstByDni(dni);
         this.userMapper.updateEntityFromDto(updateUserDto, userEntity);
         return this.userMapper.toRequestDto(crudUserEntity.save(userEntity));
     }
 
     @Override
-    public UserDtoRequest updateUserStatus(String dni, UpdateUserStatusDto updateUserStatusDto) {
+    public UserRequestDto updateUserStatus(String dni, UpdateUserStatusDto updateUserStatusDto) {
         UserEntity userEntity = this.crudUserEntity.findFirstByDni(dni);
         this.userMapper.updateStatusEntityFromDto(updateUserStatusDto, userEntity);
         return this.userMapper.toRequestDto(crudUserEntity.save(userEntity));

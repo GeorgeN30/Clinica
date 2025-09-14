@@ -1,6 +1,8 @@
 package com.Gns.clinica.persistence.repository;
 
-import com.Gns.clinica.domain.dto.SpecialtyDto;
+import com.Gns.clinica.domain.dto.request.SpecialtyRequestDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyPublicResponseDto;
+import com.Gns.clinica.domain.dto.response.SpecialtyResponseDto;
 import com.Gns.clinica.domain.repository.SpecialtyRepository;
 import com.Gns.clinica.persistence.crud.CrudSpecialtyEntity;
 import com.Gns.clinica.persistence.entity.SpecialtyEntity;
@@ -22,33 +24,33 @@ public class SpecialtyEntityRepository implements SpecialtyRepository {
     }
 
     @Override
-    public List<SpecialtyDto> getAll() {
+    public List<SpecialtyResponseDto> getAll() {
         return this.specialtyMapper.toDto(this.crudSpecialtyEntity.findAll());
     }
 
     @Override
-    public SpecialtyDto getSpecialtyByName(String name) {
+    public SpecialtyResponseDto getSpecialtyByName(String name) {
         return this.specialtyMapper.toDto(this.crudSpecialtyEntity.findByNameSpecialty(name));
     }
 
     @Override
-    public SpecialtyDto getById(long id) {
+    public SpecialtyResponseDto getById(long id) {
         return this.specialtyMapper.toDto(this.crudSpecialtyEntity.findById(id).orElse(null));
     }
 
     @Override
-    public SpecialtyDto addSpecialty(SpecialtyDto specialtyDto) {
-        SpecialtyEntity specialtyEntity = this.specialtyMapper.toEntity(specialtyDto);
-        return this.specialtyMapper.toDto(this.crudSpecialtyEntity.save(specialtyEntity));
+    public SpecialtyRequestDto addSpecialty(SpecialtyRequestDto specialtyRequestDto) {
+        SpecialtyEntity specialtyEntity = this.specialtyMapper.toEntity(specialtyRequestDto);
+        return this.specialtyMapper.toRequestDto(this.crudSpecialtyEntity.save(specialtyEntity));
     }
 
     @Override
-    public SpecialtyDto updateSpecialty(long id, SpecialtyDto specialtyDto) {
+    public SpecialtyPublicResponseDto updateSpecialty(long id, SpecialtyPublicResponseDto specialtyPublicResponseDto) {
         SpecialtyEntity specialtyEntity = this.crudSpecialtyEntity.findById(id).orElse(null);
-        this.specialtyMapper.updateEntityFromDto(specialtyDto, specialtyEntity);
+        this.specialtyMapper.updateEntityFromDto(specialtyPublicResponseDto, specialtyEntity);
         if (specialtyEntity == null) {
             return null;
         }
-        return this.specialtyMapper.toDto(crudSpecialtyEntity.save(specialtyEntity));
+        return this.specialtyMapper.toPublicDto(crudSpecialtyEntity.save(specialtyEntity));
     }
 }

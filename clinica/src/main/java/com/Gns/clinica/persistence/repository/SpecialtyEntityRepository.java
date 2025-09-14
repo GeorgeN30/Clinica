@@ -5,7 +5,6 @@ import com.Gns.clinica.domain.repository.SpecialtyRepository;
 import com.Gns.clinica.persistence.crud.CrudSpecialtyEntity;
 import com.Gns.clinica.persistence.entity.SpecialtyEntity;
 import com.Gns.clinica.persistence.mapper.SpecialtyMapper;
-import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

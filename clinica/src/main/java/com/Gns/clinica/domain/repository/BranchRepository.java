@@ -12,6 +12,6 @@ public interface BranchRepository {
     BranchPublicResponseDto getByName(String name);
     List<BranchPublicResponseDto> getAllPublic();
     BranchRequestDto addBranch(BranchRequestDto branchRequestDto);
-    BranchPublicResponseDto updateBranch(long id, BranchPublicResponseDto branchPublicResponseDto);
+    BranchRequestDto updateBranch(long id, BranchRequestDto branchRequestDto);
 
 }

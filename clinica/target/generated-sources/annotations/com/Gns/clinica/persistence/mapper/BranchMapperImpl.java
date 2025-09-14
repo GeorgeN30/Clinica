@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-14T00:28:45-0500",
+    date = "2025-09-14T12:53:58-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -23,15 +23,15 @@ public class BranchMapperImpl implements BranchMapper {
             return null;
         }
 
-        Long idBranch = null;
         String name = null;
         String address = null;
         String phone = null;
+        Long idBranch = null;
 
-        idBranch = branchEntity.getIdBranch();
         name = branchEntity.getName();
         address = branchEntity.getAddress();
         phone = branchEntity.getPhone();
+        idBranch = branchEntity.getIdBranch();
 
         BranchResponseDto branchResponseDto = new BranchResponseDto( idBranch, name, address, phone );
 
@@ -120,13 +120,13 @@ public class BranchMapperImpl implements BranchMapper {
     }
 
     @Override
-    public void updateEntityFromDto(BranchPublicResponseDto branchPublicResponseDto, BranchEntity branchEntity) {
-        if ( branchPublicResponseDto == null ) {
+    public void updateEntityFromDto(BranchRequestDto branchRequestDto, BranchEntity branchEntity) {
+        if ( branchRequestDto == null ) {
             return;
         }
 
-        branchEntity.setName( branchPublicResponseDto.name() );
-        branchEntity.setAddress( branchPublicResponseDto.address() );
-        branchEntity.setPhone( branchPublicResponseDto.phone() );
+        branchEntity.setName( branchRequestDto.name() );
+        branchEntity.setAddress( branchRequestDto.address() );
+        branchEntity.setPhone( branchRequestDto.phone() );
     }
 }

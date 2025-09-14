@@ -48,12 +48,12 @@ public class BranchEntityRepository implements BranchRepository {
     }
 
     @Override
-    public BranchPublicResponseDto updateBranch(long id, BranchPublicResponseDto branchPublicResponseDto) {
+    public BranchRequestDto updateBranch(long id, BranchRequestDto branchRequestDto) {
         BranchEntity branchEntity = this.crudBranchEntity.findById(id).orElse(null);
         if (branchEntity == null) {
             return null;
         }
-        this.branchMapper.updateEntityFromDto(branchPublicResponseDto, branchEntity);
-        return this.branchMapper.toPublicResponseDto(this.crudBranchEntity.save(branchEntity));
+        this.branchMapper.updateEntityFromDto(branchRequestDto, branchEntity);
+        return this.branchMapper.toRequestDto(this.crudBranchEntity.save(branchEntity));
     }
 }

@@ -10,7 +10,9 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BranchMapper {
-    @InheritConfiguration
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "address", target = "address")
+    @Mapping(source = "phone", target = "phone")
     BranchResponseDto toResponseDto(BranchEntity branchEntity);
     List<BranchResponseDto> toResponseDto(List<BranchEntity> branchEntities);
 
@@ -27,7 +29,11 @@ public interface BranchMapper {
     @Mapping(source = "phone", target = "phone")
     BranchEntity toEntity(BranchRequestDto branchRequestDto);
 
-    @InheritInverseConfiguration
+    @Mapping(source = "name", target = "name")
+    @Mapping(source = "address", target = "address")
+    @Mapping(source = "phone", target = "phone")
     BranchRequestDto toRequestDto(BranchEntity branchEntity);
-    void updateEntityFromDto(BranchPublicResponseDto branchPublicResponseDto, @MappingTarget BranchEntity branchEntity);
+
+
+    void updateEntityFromDto(BranchRequestDto branchRequestDto, @MappingTarget BranchEntity branchEntity);
 }

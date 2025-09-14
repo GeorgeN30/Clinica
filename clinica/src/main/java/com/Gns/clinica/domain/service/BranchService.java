@@ -38,8 +38,8 @@ public class BranchService {
         return this.branchRepository.addBranch(branchRequestDto);
     }
 
-    public BranchPublicResponseDto updateBranch(long id, BranchPublicResponseDto branchPublicResponseDto) {
-        return this.branchRepository.updateBranch(id, branchPublicResponseDto);
+    public BranchRequestDto updateBranch(long id, BranchRequestDto branchRequestDto) {
+        return this.branchRepository.updateBranch(id, branchRequestDto);
     }
 
 }

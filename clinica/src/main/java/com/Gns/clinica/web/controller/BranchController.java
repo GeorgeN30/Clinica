@@ -32,19 +32,19 @@ public class BranchController {
         return ResponseEntity.ok(this.branchService.getByName(name));
     }
 
-    @GetMapping("/public")
+    @GetMapping("/name")
     public ResponseEntity<List<BranchPublicResponseDto>> getAllPublicBranches() {
         return ResponseEntity.ok(this.branchService.getAllPublic());
     }
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<BranchRequestDto> addBranch(@RequestBody BranchRequestDto branchRequestDto) {
         return ResponseEntity.ok(this.branchService.addBranch(branchRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BranchPublicResponseDto> updateBranch(@PathVariable long id, @RequestBody BranchPublicResponseDto branchPublicResponseDto) {
-        return ResponseEntity.ok(this.branchService.updateBranch(id, branchPublicResponseDto));
+    public ResponseEntity<BranchRequestDto> updateBranch(@PathVariable long id, @RequestBody BranchRequestDto branchRequestDto) {
+        return ResponseEntity.ok(this.branchService.updateBranch(id, branchRequestDto));
     }
 
 }

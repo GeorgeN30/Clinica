@@ -3,13 +3,11 @@ package com.Gns.clinica.persistence.mapper;
 import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
+import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.persistence.entity.SpecialtyEntity;
 import com.Gns.clinica.persistence.entity.UserEntity;
-import org.mapstruct.InheritInverseConfiguration;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 
 import java.util.List;
@@ -17,6 +15,7 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
 
     @Mapping(source = "dni", target = "dni")
     @Mapping(source = "firstName", target = "firstName")
@@ -34,6 +33,7 @@ public interface UserMapper {
     @InheritInverseConfiguration
     UserEntity toEntity(UserRequestDto userRequestDto);
 
+    @Mapping(source = "idUser", target = "idUser")
     @Mapping(source = "dni", target = "dni")
     @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")
@@ -44,7 +44,8 @@ public interface UserMapper {
     UserResponseDto toResponseDto(UserEntity userEntity);
     List<UserResponseDto> toResponseDto(List<UserEntity> userEntities);
 
-
+    @InheritConfiguration
+    UserPublicResponseDto toPublicResponseDto(UserEntity userEntity);
 
     @Mapping(source = "firstName", target = "firstName")
     @Mapping(source = "lastName", target = "lastName")

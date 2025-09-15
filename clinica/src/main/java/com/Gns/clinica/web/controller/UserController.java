@@ -3,6 +3,7 @@ package com.Gns.clinica.web.controller;
 import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
+import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.service.UserService;
@@ -37,28 +38,34 @@ public class UserController {
                 .status(HttpStatus.CREATED)
                 .body(this.userService.addUser(userRequestDto));
     }
+
     @GetMapping
-    public ResponseEntity<List<UserResponseDto>> findAll(){
+    public ResponseEntity<List<UserResponseDto>> getAll(){
         return ResponseEntity.ok(this.userService.getAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> getById(@PathVariable Long id){
+        return ResponseEntity.ok(this.userService.getById(id));
+    }
+
     @GetMapping("/patients")
-    public ResponseEntity<List<UserResponseDto>> findAllByPatient(Role role){
+    public ResponseEntity<List<UserResponseDto>> getAllByPatient(Role role){
         return ResponseEntity.ok(this.userService.getAllByRolPatient(role));
     }
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<UserResponseDto>> findAllByDoctor(Role role){
+    public ResponseEntity<List<UserResponseDto>> getAllByDoctor(Role role){
         return ResponseEntity.ok(this.userService.getAllByRolDoctor(role));
     }
 
     @GetMapping("/admins")
-    public ResponseEntity<List<UserResponseDto>> findAllByAdmin(Role role){
+    public ResponseEntity<List<UserResponseDto>> getAllByAdmin(Role role){
         return ResponseEntity.ok(this.userService.getAllByRolAdmin(role));
     }
 
-    @GetMapping("/{dni}")
-    public ResponseEntity<UserResponseDto> findByDni(@PathVariable String dni) {
+    @GetMapping("/dni/{dni}")
+    public ResponseEntity<UserPublicResponseDto> findByDni(@PathVariable String dni) {
         if (dni.isBlank()) {
             return ResponseEntity.badRequest().build();
         }

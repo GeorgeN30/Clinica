@@ -3,6 +3,7 @@ package com.Gns.clinica.domain.service;
 import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
+import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.repository.UserRepository;
@@ -28,6 +29,10 @@ public class UserService {
         return this.userRepository.addUser(userRequestDto);
     }
 
+    public UserResponseDto getById(long id) {
+        return this.userRepository.getById(id);
+    }
+
     public List<UserResponseDto> getAll(){
         return this.userRepository.getAll();
     }
@@ -44,7 +49,7 @@ public class UserService {
         return this.userRepository.getAllByRoleAdmin(role);
     }
 
-    public UserResponseDto getFirstByDni(String dni) {
+    public UserPublicResponseDto getFirstByDni(String dni) {
         return this.userRepository.getFirstByDni(dni);
     }
 

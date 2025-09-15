@@ -2,9 +2,7 @@ package com.Gns.clinica.domain.dto.request;
 
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.enums.UserStatus;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public record UserRequestDto(
         String dni,
         String firstName,

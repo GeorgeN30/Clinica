@@ -3,6 +3,7 @@ package com.Gns.clinica.persistence.repository;
 import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
+import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.enums.UserStatus;
@@ -41,6 +42,11 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
+    public UserResponseDto getById(long id) {
+        return this.userMapper.toResponseDto(this.crudUserEntity.findById(id).orElse(null));
+    }
+
+    @Override
     public List<UserResponseDto> getAll() {
         return this.userMapper.toResponseDto(this.crudUserEntity.findAll());
     }
@@ -61,8 +67,8 @@ public class UserEntityRepository implements UserRepository {
     }
 
     @Override
-    public UserResponseDto getFirstByDni(String dni) {
-        return this.userMapper.toResponseDto(this.crudUserEntity.findFirstByDni(dni));
+    public UserPublicResponseDto getFirstByDni(String dni) {
+        return this.userMapper.toPublicResponseDto(this.crudUserEntity.findFirstByDni(dni));
     }
 
     @Override

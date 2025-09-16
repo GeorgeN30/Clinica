@@ -30,10 +30,6 @@ public class ReservationEntity {
     private UserEntity doctor;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_specialty")
-    private SpecialtyEntity specialty;
-
-    @ManyToOne(optional = false)
     @JoinColumn(name = "id_branch")
     private BranchEntity branch;
 

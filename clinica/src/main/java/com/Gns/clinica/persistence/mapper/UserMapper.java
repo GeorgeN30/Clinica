@@ -40,11 +40,18 @@ public interface UserMapper {
     @Mapping(source = "email", target = "email")
     @Mapping(source = "phone", target = "phone")
     @Mapping(source = "role", target = "role")
-    @Mapping(source = "specialties", target = "specialties")
+    @Mapping(source = "specialties.idSpecialty", target = "idSpecialty")
+    @Mapping(source = "specialties.nameSpecialty", target = "nameSpecialty")
     UserResponseDto toResponseDto(UserEntity userEntity);
     List<UserResponseDto> toResponseDto(List<UserEntity> userEntities);
 
-    @InheritConfiguration
+
+    @Mapping(source = "dni", target = "dni")
+    @Mapping(source = "firstName", target = "firstName")
+    @Mapping(source = "lastName", target = "lastName")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "phone", target = "phone")
+    @Mapping(source = "specialties.nameSpecialty", target = "nameSpecialty")
     UserPublicResponseDto toPublicResponseDto(UserEntity userEntity);
 
     @Mapping(source = "firstName", target = "firstName")

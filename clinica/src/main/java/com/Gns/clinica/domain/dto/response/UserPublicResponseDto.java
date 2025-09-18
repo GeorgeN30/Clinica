@@ -5,6 +5,7 @@ public record UserPublicResponseDto(
         String firstName,
         String lastName,
         String email,
-        String phone
+        String phone,
+        String nameSpecialty
 ) {
 }

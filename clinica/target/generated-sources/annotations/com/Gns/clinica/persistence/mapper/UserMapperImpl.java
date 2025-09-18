@@ -3,7 +3,6 @@ package com.Gns.clinica.persistence.mapper;
 import com.Gns.clinica.domain.dto.request.UserRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
-import com.Gns.clinica.domain.dto.response.SpecialtyResponseDto;
 import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-14T22:31:05-0500",
+    date = "2025-09-17T20:50:12-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -94,7 +93,8 @@ public class UserMapperImpl implements UserMapper {
         String email = null;
         String phone = null;
         Role role = null;
-        SpecialtyResponseDto specialties = null;
+        Long idSpecialty = null;
+        String nameSpecialty = null;
         UserStatus status = null;
         Boolean disabled = null;
         Boolean locked = null;
@@ -106,12 +106,13 @@ public class UserMapperImpl implements UserMapper {
         email = userEntity.getEmail();
         phone = userEntity.getPhone();
         role = userEntity.getRole();
-        specialties = specialtyEntityToSpecialtyResponseDto( userEntity.getSpecialties() );
+        idSpecialty = userEntitySpecialtiesIdSpecialty( userEntity );
+        nameSpecialty = userEntitySpecialtiesNameSpecialty( userEntity );
         status = userEntity.getStatus();
         disabled = userEntity.getDisabled();
         locked = userEntity.getLocked();
 
-        UserResponseDto userResponseDto = new UserResponseDto( idUser, dni, firstName, lastName, email, phone, role, status, disabled, locked, specialties );
+        UserResponseDto userResponseDto = new UserResponseDto( idUser, dni, firstName, lastName, email, phone, role, status, disabled, locked, idSpecialty, nameSpecialty );
 
         return userResponseDto;
     }
@@ -141,14 +142,16 @@ public class UserMapperImpl implements UserMapper {
         String lastName = null;
         String email = null;
         String phone = null;
+        String nameSpecialty = null;
 
         dni = userEntity.getDni();
         firstName = userEntity.getFirstName();
         lastName = userEntity.getLastName();
         email = userEntity.getEmail();
         phone = userEntity.getPhone();
+        nameSpecialty = userEntitySpecialtiesNameSpecialty( userEntity );
 
-        UserPublicResponseDto userPublicResponseDto = new UserPublicResponseDto( dni, firstName, lastName, email, phone );
+        UserPublicResponseDto userPublicResponseDto = new UserPublicResponseDto( dni, firstName, lastName, email, phone, nameSpecialty );
 
         return userPublicResponseDto;
     }
@@ -182,19 +185,33 @@ public class UserMapperImpl implements UserMapper {
         userEntity.setLocked( updateUserStatusDto.locked() );
     }
 
-    protected SpecialtyResponseDto specialtyEntityToSpecialtyResponseDto(SpecialtyEntity specialtyEntity) {
-        if ( specialtyEntity == null ) {
+    private Long userEntitySpecialtiesIdSpecialty(UserEntity userEntity) {
+        if ( userEntity == null ) {
             return null;
         }
+        SpecialtyEntity specialties = userEntity.getSpecialties();
+        if ( specialties == null ) {
+            return null;
+        }
+        Long idSpecialty = specialties.getIdSpecialty();
+        if ( idSpecialty == null ) {
+            return null;
+        }
+        return idSpecialty;
+    }
 
-        Long idSpecialty = null;
-        String nameSpecialty = null;
-
-        idSpecialty = specialtyEntity.getIdSpecialty();
-        nameSpecialty = specialtyEntity.getNameSpecialty();
-
-        SpecialtyResponseDto specialtyResponseDto = new SpecialtyResponseDto( idSpecialty, nameSpecialty );
-
-        return specialtyResponseDto;
+    private String userEntitySpecialtiesNameSpecialty(UserEntity userEntity) {
+        if ( userEntity == null ) {
+            return null;
+        }
+        SpecialtyEntity specialties = userEntity.getSpecialties();
+        if ( specialties == null ) {
+            return null;
+        }
+        String nameSpecialty = specialties.getNameSpecialty();
+        if ( nameSpecialty == null ) {
+            return null;
+        }
+        return nameSpecialty;
     }
 }

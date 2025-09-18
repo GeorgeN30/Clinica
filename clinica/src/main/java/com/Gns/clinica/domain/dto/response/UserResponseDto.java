@@ -17,6 +17,7 @@ public record UserResponseDto(
         UserStatus status,
         Boolean disabled,
         Boolean locked,
-        SpecialtyResponseDto specialties
+        Long idSpecialty,
+        String nameSpecialty
 ) {
 }

@@ -9,7 +9,6 @@ import com.Gns.clinica.domain.repository.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -30,8 +29,8 @@ public class ReservationService {
         return this.reservationRepository.getById(id);
     }
 
-    public List<ReservationResponseDto> getAllByDate(LocalDate date){
-        return this.reservationRepository.getAllByDate(date);
+    public List<ReservationPublicResponseDto> getAllByDoctorDni(String dni){
+        return this.reservationRepository.getAllByDoctorDni(dni);
     }
 
     public ReservationPublicResponseDto getPublicReservationByDni(String dni){

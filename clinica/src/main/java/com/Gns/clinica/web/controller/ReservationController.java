@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -34,12 +32,12 @@ public class ReservationController {
         return ResponseEntity.ok(reservationService.getById(id));
     }
 
-    @GetMapping("/date/{date}")
-    public ResponseEntity<List<ReservationResponseDto>> getAllByDate(@PathVariable LocalDate date) {
-        return ResponseEntity.ok(reservationService.getAllByDate(date));
+    @GetMapping("/doctor/{dni}")
+    public ResponseEntity<List<ReservationPublicResponseDto>> getAllByDoctorDni(@PathVariable String dni) {
+        return ResponseEntity.ok(reservationService.getAllByDoctorDni(dni));
     }
 
-    @GetMapping("/dni/{dni}")
+    @GetMapping("/patient/{dni}")
     public ResponseEntity<ReservationPublicResponseDto> getPublicReservationByDni(@PathVariable String dni){
         return ResponseEntity.ok(reservationService.getPublicReservationByDni(dni));
     }

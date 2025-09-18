@@ -10,7 +10,6 @@ import com.Gns.clinica.persistence.entity.ReservationEntity;
 import com.Gns.clinica.persistence.mapper.ReservationMapper;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -34,8 +33,8 @@ public class ReservationEntityRepository implements ReservationRepository {
     }
 
     @Override
-    public List<ReservationResponseDto> getAllByDate(LocalDate date) {
-        return this.reservationMapper.toResponseDto(this.crudReservationEntity.findByReservationDate(date));
+    public List<ReservationPublicResponseDto> getAllByDoctorDni(String dni) {
+        return this.reservationMapper.toPublicResponseDto(this.crudReservationEntity.findByDoctor_Dni(dni));
     }
 
     @Override

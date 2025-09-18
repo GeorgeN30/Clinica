@@ -32,6 +32,7 @@ public interface ReservationMapper {
     ReservationResponseDto toResponseDto(ReservationEntity reservationEntity);
     List<ReservationResponseDto> toResponseDto(List<ReservationEntity> reservationEntityList);
 
+    @Mapping(source = "idReservation", target = "idReservation")
     @Mapping(source = "patient.firstName", target = "namePatient")
     @Mapping(source = "doctor.firstName", target = "nameDoctor")
     @Mapping(source = "doctor.specialties.nameSpecialty", target = "nameSpecialty")

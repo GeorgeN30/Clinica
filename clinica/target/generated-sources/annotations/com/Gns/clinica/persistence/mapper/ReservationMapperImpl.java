@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-18T11:17:58-0500",
+    date = "2025-09-18T11:59:22-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -83,6 +83,7 @@ public class ReservationMapperImpl implements ReservationMapper {
             return null;
         }
 
+        Long idReservation = null;
         String namePatient = null;
         String nameDoctor = null;
         String nameSpecialty = null;
@@ -91,6 +92,7 @@ public class ReservationMapperImpl implements ReservationMapper {
         LocalTime reservationTime = null;
         ReservationStatus status = null;
 
+        idReservation = reservationEntity.getIdReservation();
         namePatient = reservationEntityPatientFirstName( reservationEntity );
         nameDoctor = reservationEntityDoctorFirstName( reservationEntity );
         nameSpecialty = reservationEntityDoctorSpecialtiesNameSpecialty( reservationEntity );
@@ -99,7 +101,7 @@ public class ReservationMapperImpl implements ReservationMapper {
         reservationTime = reservationEntity.getReservationTime();
         status = reservationEntity.getStatus();
 
-        ReservationPublicResponseDto reservationPublicResponseDto = new ReservationPublicResponseDto( namePatient, nameDoctor, nameSpecialty, nameBranch, reservationDate, reservationTime, status );
+        ReservationPublicResponseDto reservationPublicResponseDto = new ReservationPublicResponseDto( idReservation, namePatient, nameDoctor, nameSpecialty, nameBranch, reservationDate, reservationTime, status );
 
         return reservationPublicResponseDto;
     }

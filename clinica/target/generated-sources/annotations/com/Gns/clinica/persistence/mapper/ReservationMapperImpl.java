@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-18T11:59:22-0500",
+    date = "2025-09-18T12:11:05-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -41,6 +41,9 @@ public class ReservationMapperImpl implements ReservationMapper {
         Long idBranch = null;
         String nameBranch = null;
         Long idAvailability = null;
+        LocalDate availabilityDate = null;
+        LocalTime availabilityStart = null;
+        LocalTime availabilityEnd = null;
         LocalDate reservationDate = null;
         LocalTime reservationTime = null;
         ReservationStatus status = null;
@@ -54,11 +57,14 @@ public class ReservationMapperImpl implements ReservationMapper {
         idBranch = reservationEntityBranchIdBranch( reservationEntity );
         nameBranch = reservationEntityBranchName( reservationEntity );
         idAvailability = reservationEntityAvailabilityIdAvailability( reservationEntity );
+        availabilityDate = reservationEntityAvailabilityDate( reservationEntity );
+        availabilityStart = reservationEntityAvailabilityStartTime( reservationEntity );
+        availabilityEnd = reservationEntityAvailabilityEndTime( reservationEntity );
         reservationDate = reservationEntity.getReservationDate();
         reservationTime = reservationEntity.getReservationTime();
         status = reservationEntity.getStatus();
 
-        ReservationResponseDto reservationResponseDto = new ReservationResponseDto( idReservation, idPatient, namePatient, idDoctor, nameDoctor, nameSpecialty, idBranch, nameBranch, idAvailability, reservationDate, reservationTime, status );
+        ReservationResponseDto reservationResponseDto = new ReservationResponseDto( idReservation, idPatient, namePatient, idDoctor, nameDoctor, nameSpecialty, idBranch, nameBranch, idAvailability, availabilityDate, availabilityStart, availabilityEnd, reservationDate, reservationTime, status );
 
         return reservationResponseDto;
     }
@@ -88,6 +94,9 @@ public class ReservationMapperImpl implements ReservationMapper {
         String nameDoctor = null;
         String nameSpecialty = null;
         String nameBranch = null;
+        LocalDate availabilityDate = null;
+        LocalTime availabilityStart = null;
+        LocalTime availabilityEnd = null;
         LocalDate reservationDate = null;
         LocalTime reservationTime = null;
         ReservationStatus status = null;
@@ -97,11 +106,14 @@ public class ReservationMapperImpl implements ReservationMapper {
         nameDoctor = reservationEntityDoctorFirstName( reservationEntity );
         nameSpecialty = reservationEntityDoctorSpecialtiesNameSpecialty( reservationEntity );
         nameBranch = reservationEntityBranchName( reservationEntity );
+        availabilityDate = reservationEntityAvailabilityDate( reservationEntity );
+        availabilityStart = reservationEntityAvailabilityStartTime( reservationEntity );
+        availabilityEnd = reservationEntityAvailabilityEndTime( reservationEntity );
         reservationDate = reservationEntity.getReservationDate();
         reservationTime = reservationEntity.getReservationTime();
         status = reservationEntity.getStatus();
 
-        ReservationPublicResponseDto reservationPublicResponseDto = new ReservationPublicResponseDto( idReservation, namePatient, nameDoctor, nameSpecialty, nameBranch, reservationDate, reservationTime, status );
+        ReservationPublicResponseDto reservationPublicResponseDto = new ReservationPublicResponseDto( idReservation, namePatient, nameDoctor, nameSpecialty, nameBranch, availabilityDate, availabilityStart, availabilityEnd, reservationDate, reservationTime, status );
 
         return reservationPublicResponseDto;
     }
@@ -319,6 +331,51 @@ public class ReservationMapperImpl implements ReservationMapper {
             return null;
         }
         return idAvailability;
+    }
+
+    private LocalDate reservationEntityAvailabilityDate(ReservationEntity reservationEntity) {
+        if ( reservationEntity == null ) {
+            return null;
+        }
+        AvailabilityEntity availability = reservationEntity.getAvailability();
+        if ( availability == null ) {
+            return null;
+        }
+        LocalDate date = availability.getDate();
+        if ( date == null ) {
+            return null;
+        }
+        return date;
+    }
+
+    private LocalTime reservationEntityAvailabilityStartTime(ReservationEntity reservationEntity) {
+        if ( reservationEntity == null ) {
+            return null;
+        }
+        AvailabilityEntity availability = reservationEntity.getAvailability();
+        if ( availability == null ) {
+            return null;
+        }
+        LocalTime startTime = availability.getStartTime();
+        if ( startTime == null ) {
+            return null;
+        }
+        return startTime;
+    }
+
+    private LocalTime reservationEntityAvailabilityEndTime(ReservationEntity reservationEntity) {
+        if ( reservationEntity == null ) {
+            return null;
+        }
+        AvailabilityEntity availability = reservationEntity.getAvailability();
+        if ( availability == null ) {
+            return null;
+        }
+        LocalTime endTime = availability.getEndTime();
+        if ( endTime == null ) {
+            return null;
+        }
+        return endTime;
     }
 
     protected UserEntity reservationRequestDtoToUserEntity(ReservationRequestDto reservationRequestDto) {

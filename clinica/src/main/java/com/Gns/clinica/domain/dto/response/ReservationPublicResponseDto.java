@@ -11,6 +11,9 @@ public record ReservationPublicResponseDto (
         String nameDoctor,
         String nameSpecialty,
         String nameBranch,
+        LocalDate availabilityDate,
+        LocalTime availabilityStart,
+        LocalTime availabilityEnd,
         LocalDate reservationDate,
         LocalTime reservationTime,
         ReservationStatus status

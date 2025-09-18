@@ -15,6 +15,9 @@ public record ReservationResponseDto (
         Long idBranch,
         String nameBranch,
         Long idAvailability,
+        LocalDate availabilityDate,
+        LocalTime availabilityStart,
+        LocalTime availabilityEnd,
         LocalDate reservationDate,
         LocalTime reservationTime,
         ReservationStatus status

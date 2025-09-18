@@ -6,6 +6,8 @@ import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
 import com.Gns.clinica.domain.repository.ReservationRepository;
 import com.Gns.clinica.persistence.crud.CrudReservationEntity;
+import com.Gns.clinica.persistence.entity.ReservationEntity;
+import com.Gns.clinica.persistence.mapper.ReservationMapper;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -14,43 +16,56 @@ import java.util.List;
 @Repository
 public class ReservationEntityRepository implements ReservationRepository {
     private final CrudReservationEntity crudReservationEntity;
+    private final ReservationMapper reservationMapper;
 
-    public ReservationEntityRepository(CrudReservationEntity crudReservationEntity) {
+    public ReservationEntityRepository(CrudReservationEntity crudReservationEntity, ReservationMapper reservationMapper) {
         this.crudReservationEntity = crudReservationEntity;
+        this.reservationMapper = reservationMapper;
     }
 
     @Override
     public List<ReservationResponseDto> getAll() {
-        return List.of();
+        return this.reservationMapper.toResponseDto(this.crudReservationEntity.findAll());
     }
 
     @Override
     public ReservationResponseDto getById(long id) {
-        return null;
+        return this.reservationMapper.toResponseDto(this.crudReservationEntity.findById(id).orElse(null));
     }
 
     @Override
     public List<ReservationResponseDto> getAllByDate(LocalDate date) {
-        return List.of();
+        return this.reservationMapper.toResponseDto(this.crudReservationEntity.findByReservationDate(date));
     }
 
     @Override
     public ReservationPublicResponseDto getPublicReservationByDni(String dni) {
-        return null;
+        return this.reservationMapper.toPublicResponseDto(this.crudReservationEntity.findByPatient_Dni(dni));
     }
 
     @Override
     public ReservationRequestDto addReservation(ReservationRequestDto reservationRequestDto) {
-        return null;
+        ReservationEntity reservationEntity = this.reservationMapper.toEntity(reservationRequestDto);
+        return this.reservationMapper.toRequestDto(this.crudReservationEntity.save(reservationEntity));
     }
 
     @Override
-    public UpdateReservationDto updateReservation(UpdateReservationDto updateReservationDto) {
-        return null;
+    public ReservationRequestDto updateReservation(long id, UpdateReservationDto updateReservationDto) {
+        ReservationEntity reservationEntity = this.crudReservationEntity.findById(id).orElse(null);
+        if (reservationEntity == null) {
+            return null;
+        }
+        this.reservationMapper.toUpdateDto(updateReservationDto, reservationEntity);
+        return this.reservationMapper.toRequestDto(reservationEntity);
     }
 
     @Override
-    public UpdateReservationStatusDto updateReservationStatus(UpdateReservationStatusDto updateReservationStatusDto) {
-        return null;
+    public ReservationRequestDto updateReservationStatus(String dni, UpdateReservationStatusDto updateReservationStatusDto) {
+        ReservationEntity reservationEntity = this.crudReservationEntity.findByPatient_Dni(dni);
+        if (reservationEntity == null) {
+            return null;
+        }
+        this.reservationMapper.toUpdateStatusDto(updateReservationStatusDto, reservationEntity);
+        return this.reservationMapper.toRequestDto(this.crudReservationEntity.save(reservationEntity));
     }
 }

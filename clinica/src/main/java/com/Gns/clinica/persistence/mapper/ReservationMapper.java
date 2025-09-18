@@ -6,6 +6,7 @@ import com.Gns.clinica.domain.dto.request.update.UpdateReservationStatusDto;
 import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
 import com.Gns.clinica.persistence.entity.ReservationEntity;
+import com.Gns.clinica.persistence.entity.UserEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -44,6 +45,7 @@ public interface ReservationMapper {
     @Mapping(source = "patient.idUser", target = "idPatient")
     @Mapping(source = "doctor.idUser", target = "idDoctor")
     @Mapping(source = "availability.idAvailability", target = "idAvailability")
+    @Mapping(source = "branch.idBranch", target = "idBranch")
     @Mapping(source = "reservationDate", target = "reservationDate")
     @Mapping(source = "reservationTime", target = "reservationTime")
     @Mapping(source = "status", target = "status")
@@ -63,4 +65,12 @@ public interface ReservationMapper {
     @Mapping(source = "status", target = "status")
     void toUpdateStatusDto(UpdateReservationStatusDto updateReservationStatusDto, @MappingTarget ReservationEntity reservationEntity);
 
+
+
+    default UserEntity map(Long idDoctor) {
+        if (idDoctor == null) return null;
+        UserEntity doctor = new UserEntity();
+        doctor.setIdUser(idDoctor);
+        return doctor;
+    }
 }

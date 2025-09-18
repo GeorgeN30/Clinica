@@ -15,6 +15,6 @@ public interface ReservationRepository {
     List<ReservationResponseDto> getAllByDate(LocalDate date);
     ReservationPublicResponseDto getPublicReservationByDni(String dni);
     ReservationRequestDto addReservation(ReservationRequestDto reservationRequestDto);
-    UpdateReservationDto updateReservation(UpdateReservationDto updateReservationDto);
-    UpdateReservationStatusDto updateReservationStatus(UpdateReservationStatusDto updateReservationStatusDto);
+    ReservationRequestDto updateReservation(long id, UpdateReservationDto updateReservationDto);
+    ReservationRequestDto updateReservationStatus(String dni, UpdateReservationStatusDto updateReservationStatusDto);
 }

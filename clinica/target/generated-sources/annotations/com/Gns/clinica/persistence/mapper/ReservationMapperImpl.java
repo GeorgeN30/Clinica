@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-16T19:12:40-0500",
+    date = "2025-09-17T20:48:48-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -127,6 +127,7 @@ public class ReservationMapperImpl implements ReservationMapper {
         Long idPatient = null;
         Long idDoctor = null;
         Long idAvailability = null;
+        Long idBranch = null;
         LocalDate reservationDate = null;
         LocalTime reservationTime = null;
         ReservationStatus status = null;
@@ -134,11 +135,10 @@ public class ReservationMapperImpl implements ReservationMapper {
         idPatient = reservationEntityPatientIdUser( reservationEntity );
         idDoctor = reservationEntityDoctorIdUser( reservationEntity );
         idAvailability = reservationEntityAvailabilityIdAvailability( reservationEntity );
+        idBranch = reservationEntityBranchIdBranch( reservationEntity );
         reservationDate = reservationEntity.getReservationDate();
         reservationTime = reservationEntity.getReservationTime();
         status = reservationEntity.getStatus();
-
-        Long idBranch = null;
 
         ReservationRequestDto reservationRequestDto = new ReservationRequestDto( idPatient, idDoctor, idBranch, idAvailability, reservationDate, reservationTime, status );
 
@@ -156,6 +156,7 @@ public class ReservationMapperImpl implements ReservationMapper {
         reservationEntity.patient( reservationRequestDtoToUserEntity( reservationRequestDto ) );
         reservationEntity.doctor( reservationRequestDtoToUserEntity1( reservationRequestDto ) );
         reservationEntity.availability( reservationRequestDtoToAvailabilityEntity( reservationRequestDto ) );
+        reservationEntity.branch( reservationRequestDtoToBranchEntity( reservationRequestDto ) );
         reservationEntity.reservationDate( reservationRequestDto.reservationDate() );
         reservationEntity.reservationTime( reservationRequestDto.reservationTime() );
         reservationEntity.status( reservationRequestDto.status() );
@@ -352,6 +353,18 @@ public class ReservationMapperImpl implements ReservationMapper {
         availabilityEntity.idAvailability( reservationRequestDto.idAvailability() );
 
         return availabilityEntity.build();
+    }
+
+    protected BranchEntity reservationRequestDtoToBranchEntity(ReservationRequestDto reservationRequestDto) {
+        if ( reservationRequestDto == null ) {
+            return null;
+        }
+
+        BranchEntity.BranchEntityBuilder branchEntity = BranchEntity.builder();
+
+        branchEntity.idBranch( reservationRequestDto.idBranch() );
+
+        return branchEntity.build();
     }
 
     protected void updateReservationDtoToUserEntity(UpdateReservationDto updateReservationDto, UserEntity mappingTarget) {

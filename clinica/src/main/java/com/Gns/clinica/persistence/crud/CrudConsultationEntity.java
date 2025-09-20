@@ -4,4 +4,6 @@ import com.Gns.clinica.persistence.entity.ConsultationEntity;
 import org.springframework.data.repository.ListCrudRepository;
 
 public interface CrudConsultationEntity extends ListCrudRepository<ConsultationEntity, Long> {
+    ConsultationEntity findByPatient_Dni(String dniPatient);
+    ConsultationEntity findByDoctor_Dni(String dniPatient);
 }

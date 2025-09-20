@@ -4,10 +4,12 @@ import com.Gns.clinica.domain.dto.request.ConsultationRequestDto;
 import com.Gns.clinica.domain.dto.response.ConsultationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ConsultationResponseDto;
 
+import java.util.List;
+
 public interface ConsultationRepository {
-    ConsultationResponseDto getAll();
+    List<ConsultationResponseDto> getAll();
     ConsultationResponseDto getById(long id);
-    ConsultationPublicResponseDto getByNamePatient(String namePatient);
-    ConsultationPublicResponseDto getByNameDoctor(String nameDoctor);
+    ConsultationPublicResponseDto getByDniPatient(String dniPatient);
+    ConsultationPublicResponseDto getByDniDoctor(String dniDoctor);
     ConsultationRequestDto addConsultation(ConsultationRequestDto consultationRequestDto);
 }

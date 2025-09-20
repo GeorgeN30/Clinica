@@ -7,7 +7,6 @@ public record ConsultationPublicResponseDto(
         String namePatient,
         String nameDoctor,
         String nameSpecialty,
-        String nameBranch,
         LocalDate consultationDate,
         String reason,
         String diagnosis,

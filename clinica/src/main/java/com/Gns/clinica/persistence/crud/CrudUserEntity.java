@@ -7,8 +7,10 @@ import org.springframework.data.repository.ListCrudRepository;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CrudUserEntity extends ListCrudRepository<UserEntity, Long> {
     List<UserEntity> findAllByRole(Role role);
-    UserEntity findFirstByDni(String dni);
+    Optional<UserEntity> findFirstByDni(String dni);
+    Optional<UserEntity> findFirstByEmail(String email);
 }

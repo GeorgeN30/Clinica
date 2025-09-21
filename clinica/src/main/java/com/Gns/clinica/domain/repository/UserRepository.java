@@ -6,18 +6,16 @@ import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
 import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
+import com.Gns.clinica.persistence.entity.UserEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository {
-    UserRequestDto addPatient(UserRequestDto userRequestDto);
-    UserRequestDto addUser(UserRequestDto userRequestDto);
-    UserResponseDto getById(long id);
-    List<UserResponseDto> getAll();
-    List<UserResponseDto> getAllByRolePatient(Role role);
-    List<UserResponseDto> getAllByRoleDoctor(Role role);
-    List<UserResponseDto> getAllByRoleAdmin(Role role);
-    UserPublicResponseDto getFirstByDni(String dni);
-    UserRequestDto updateUser(String dni, UpdateUserDto updateUserDto);
-    UserRequestDto updateUserStatus(String dni, UpdateUserStatusDto updateUserStatusDto);
+    UserEntity save(UserEntity userEntity);
+    Optional<UserEntity> findById(long id);
+    List<UserEntity> findAll();
+    List<UserEntity> findAllByRole(Role role);
+    Optional<UserEntity> findFirstByDni(String dni);
+    Optional<UserEntity> findFirstByEmail(String email);
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-18T11:17:58-0500",
+    date = "2025-09-21T15:15:39-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -175,12 +175,7 @@ public class UserMapperImpl implements UserMapper {
             return;
         }
 
-        if ( updateUserStatusDto.status() != null ) {
-            userEntity.setStatus( Enum.valueOf( UserStatus.class, updateUserStatusDto.status() ) );
-        }
-        else {
-            userEntity.setStatus( null );
-        }
+        userEntity.setStatus( updateUserStatusDto.status() );
         userEntity.setDisabled( updateUserStatusDto.disabled() );
         userEntity.setLocked( updateUserStatusDto.locked() );
     }

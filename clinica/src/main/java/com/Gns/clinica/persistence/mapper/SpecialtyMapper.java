@@ -16,15 +16,15 @@ public interface SpecialtyMapper {
 
     @Mapping(source = "idSpecialty", target = "idSpecialty")
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
-    SpecialtyResponseDto toDto(SpecialtyEntity specialtyEntity);
-    List<SpecialtyResponseDto> toDto(List<SpecialtyEntity> specialtyEntities);
+    SpecialtyResponseDto toResponseDto(SpecialtyEntity specialtyEntity);
+    List<SpecialtyResponseDto> toResponseDto(List<SpecialtyEntity> specialtyEntities);
 
 
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
     SpecialtyRequestDto toRequestDto(SpecialtyEntity specialtyEntity);
 
     @Mapping(source = "nameSpecialty", target = "nameSpecialty")
-    SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity);
+    SpecialtyPublicResponseDto toPublicResponseDto(SpecialtyEntity specialtyEntity);
     List<SpecialtyPublicResponseDto> toPublicDto(List<SpecialtyEntity> specialtyEntities);
 
     @InheritInverseConfiguration

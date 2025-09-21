@@ -9,7 +9,7 @@ import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.enums.UserStatus;
 import com.Gns.clinica.domain.exception.*;
 import com.Gns.clinica.domain.repository.UserRepository;
-import com.Gns.clinica.domain.service.interfaces.UserServiceInterface;
+import com.Gns.clinica.domain.service.interfaces.UserService;
 import com.Gns.clinica.persistence.entity.UserEntity;
 import com.Gns.clinica.persistence.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserServiceInterface {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
 

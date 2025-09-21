@@ -9,7 +9,7 @@ import com.Gns.clinica.domain.enums.Role;
 
 import java.util.List;
 
-public interface UserServiceInterface {
+public interface UserService {
     UserPublicResponseDto addPatient(UserRequestDto userRequestDto);
     UserPublicResponseDto addUser(UserRequestDto userRequestDto);
     UserResponseDto getById(long id);

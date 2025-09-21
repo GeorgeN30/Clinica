@@ -51,18 +51,18 @@ public class UserController {
     }
 
     @GetMapping("/patients")
-    public ResponseEntity<List<UserResponseDto>> getAllByPatient(Role role){
-        return ResponseEntity.ok(this.userService.getAllByRolePatient(role));
+    public ResponseEntity<List<UserResponseDto>> getAllByPatients(){
+        return ResponseEntity.ok(this.userService.getAllByRolePatient(Role.PATIENT));
     }
 
     @GetMapping("/doctors")
-    public ResponseEntity<List<UserResponseDto>> getAllByDoctor(Role role){
-        return ResponseEntity.ok(this.userService.getAllByRoleDoctor(role));
+    public ResponseEntity<List<UserResponseDto>> getAllByDoctors(){
+        return ResponseEntity.ok(this.userService.getAllByRoleDoctor(Role.DOCTOR));
     }
 
     @GetMapping("/admins")
-    public ResponseEntity<List<UserResponseDto>> getAllByAdmin(Role role){
-        return ResponseEntity.ok(this.userService.getAllByRoleAdmin(role));
+    public ResponseEntity<List<UserResponseDto>> getAllByAdmins(){
+        return ResponseEntity.ok(this.userService.getAllByRoleAdmin(Role.ADMIN));
     }
 
     @GetMapping("/dni/{dni}")

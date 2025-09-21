@@ -8,7 +8,6 @@ import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserServiceInterface {
     UserPublicResponseDto addPatient(UserRequestDto userRequestDto);

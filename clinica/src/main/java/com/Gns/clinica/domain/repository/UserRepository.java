@@ -1,10 +1,5 @@
 package com.Gns.clinica.domain.repository;
 
-import com.Gns.clinica.domain.dto.request.UserRequestDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
-import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
-import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.persistence.entity.UserEntity;
 

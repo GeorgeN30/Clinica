@@ -3,7 +3,9 @@ package com.Gns.clinica.persistence.crud;
 import com.Gns.clinica.persistence.entity.ConsultationEntity;
 import org.springframework.data.repository.ListCrudRepository;
 
+import java.util.List;
+
 public interface CrudConsultationEntity extends ListCrudRepository<ConsultationEntity, Long> {
-    ConsultationEntity findByPatient_Dni(String dniPatient);
-    ConsultationEntity findByDoctor_Dni(String dniPatient);
+    List<ConsultationEntity> findByPatient_Dni(String dniPatient);
+    List<ConsultationEntity> findByDoctor_Dni(String dniPatient);
 }

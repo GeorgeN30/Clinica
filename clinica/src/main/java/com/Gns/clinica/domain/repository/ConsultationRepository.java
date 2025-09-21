@@ -9,7 +9,7 @@ import java.util.List;
 public interface ConsultationRepository {
     List<ConsultationResponseDto> getAll();
     ConsultationResponseDto getById(long id);
-    ConsultationPublicResponseDto getByDniPatient(String dniPatient);
-    ConsultationPublicResponseDto getByDniDoctor(String dniDoctor);
+    List<ConsultationPublicResponseDto> getByDniPatient(String dniPatient);
+    List<ConsultationPublicResponseDto> getByDniDoctor(String dniDoctor);
     ConsultationRequestDto addConsultation(ConsultationRequestDto consultationRequestDto);
 }

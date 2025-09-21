@@ -7,6 +7,7 @@ import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
 import com.Gns.clinica.domain.service.impl.UserServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,14 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserPublicResponseDto> addPatient(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<UserPublicResponseDto> addPatient(@Valid @RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(this.userService.addPatient(userRequestDto));
     }
 
     @PostMapping("/staff")
-    public ResponseEntity<UserPublicResponseDto> addUser(@RequestBody UserRequestDto userRequestDto) {
+    public ResponseEntity<UserPublicResponseDto> addUser(@Valid @RequestBody UserRequestDto userRequestDto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(this.userService.addUser(userRequestDto));
@@ -73,7 +74,7 @@ public class UserController {
     }
 
     @PutMapping("/{dni}")
-    public ResponseEntity<UserPublicResponseDto> updateUser(@PathVariable String dni, @RequestBody UpdateUserDto updateUserDto) {
+    public ResponseEntity<UserPublicResponseDto> updateUser(@PathVariable String dni, @Valid @RequestBody UpdateUserDto updateUserDto) {
         if (dni.isEmpty()){
             return ResponseEntity.badRequest().build();
         }
@@ -81,7 +82,7 @@ public class UserController {
     }
 
     @PatchMapping("/{dni}/status")
-    public ResponseEntity<UserPublicResponseDto> updateUserStatus(@PathVariable String dni, @RequestBody UpdateUserStatusDto updateUserStatusDto) {
+    public ResponseEntity<UserPublicResponseDto> updateUserStatus(@PathVariable String dni, @Valid @RequestBody UpdateUserStatusDto updateUserStatusDto) {
         if (dni.isEmpty()){
             return ResponseEntity.badRequest().build();
         }

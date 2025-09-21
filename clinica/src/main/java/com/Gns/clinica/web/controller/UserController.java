@@ -6,7 +6,7 @@ import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
 import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
-import com.Gns.clinica.domain.service.impl.UserServiceImpl;
+import com.Gns.clinica.domain.service.interfaces.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,11 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
 
     @Autowired
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

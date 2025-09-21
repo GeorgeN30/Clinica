@@ -3,7 +3,9 @@ package com.Gns.clinica.web.controller;
 import com.Gns.clinica.domain.dto.request.BranchRequestDto;
 import com.Gns.clinica.domain.dto.response.BranchPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.BranchResponseDto;
-import com.Gns.clinica.domain.service.BranchService;
+import com.Gns.clinica.domain.service.interfaces.BranchService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,7 @@ import java.util.List;
 public class BranchController {
     private final BranchService branchService;
 
+    @Autowired
     public BranchController(BranchService branchService) {
         this.branchService = branchService;
     }
@@ -38,12 +41,12 @@ public class BranchController {
     }
 
     @PostMapping
-    public ResponseEntity<BranchRequestDto> addBranch(@RequestBody BranchRequestDto branchRequestDto) {
+    public ResponseEntity<BranchPublicResponseDto> addBranch(@Valid @RequestBody BranchRequestDto branchRequestDto) {
         return ResponseEntity.ok(this.branchService.addBranch(branchRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BranchRequestDto> updateBranch(@PathVariable long id, @RequestBody BranchRequestDto branchRequestDto) {
+    public ResponseEntity<BranchPublicResponseDto> updateBranch(@PathVariable long id, @Valid @RequestBody BranchRequestDto branchRequestDto) {
         return ResponseEntity.ok(this.branchService.updateBranch(id, branchRequestDto));
     }
 

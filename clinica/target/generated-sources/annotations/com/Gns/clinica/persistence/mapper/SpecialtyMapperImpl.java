@@ -11,14 +11,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-21T15:52:53-0500",
+    date = "2025-09-21T18:07:34-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
 public class SpecialtyMapperImpl implements SpecialtyMapper {
 
     @Override
-    public SpecialtyResponseDto toDto(SpecialtyEntity specialtyEntity) {
+    public SpecialtyResponseDto toResponseDto(SpecialtyEntity specialtyEntity) {
         if ( specialtyEntity == null ) {
             return null;
         }
@@ -35,14 +35,14 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
     }
 
     @Override
-    public List<SpecialtyResponseDto> toDto(List<SpecialtyEntity> specialtyEntities) {
+    public List<SpecialtyResponseDto> toResponseDto(List<SpecialtyEntity> specialtyEntities) {
         if ( specialtyEntities == null ) {
             return null;
         }
 
         List<SpecialtyResponseDto> list = new ArrayList<SpecialtyResponseDto>( specialtyEntities.size() );
         for ( SpecialtyEntity specialtyEntity : specialtyEntities ) {
-            list.add( toDto( specialtyEntity ) );
+            list.add( toResponseDto( specialtyEntity ) );
         }
 
         return list;
@@ -64,7 +64,7 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
     }
 
     @Override
-    public SpecialtyPublicResponseDto toPublicDto(SpecialtyEntity specialtyEntity) {
+    public SpecialtyPublicResponseDto toPublicResponseDto(SpecialtyEntity specialtyEntity) {
         if ( specialtyEntity == null ) {
             return null;
         }
@@ -86,7 +86,7 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
 
         List<SpecialtyPublicResponseDto> list = new ArrayList<SpecialtyPublicResponseDto>( specialtyEntities.size() );
         for ( SpecialtyEntity specialtyEntity : specialtyEntities ) {
-            list.add( toPublicDto( specialtyEntity ) );
+            list.add( toPublicResponseDto( specialtyEntity ) );
         }
 
         return list;

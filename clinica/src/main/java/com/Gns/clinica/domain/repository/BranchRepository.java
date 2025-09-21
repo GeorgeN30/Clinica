@@ -1,17 +1,14 @@
 package com.Gns.clinica.domain.repository;
 
-import com.Gns.clinica.domain.dto.request.BranchRequestDto;
-import com.Gns.clinica.domain.dto.response.BranchPublicResponseDto;
-import com.Gns.clinica.domain.dto.response.BranchResponseDto;
+import com.Gns.clinica.persistence.entity.BranchEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BranchRepository {
-    List<BranchResponseDto> getAll();
-    BranchResponseDto getById(long id);
-    BranchPublicResponseDto getByName(String name);
-    List<BranchPublicResponseDto> getAllPublic();
-    BranchRequestDto addBranch(BranchRequestDto branchRequestDto);
-    BranchRequestDto updateBranch(long id, BranchRequestDto branchRequestDto);
+    List<BranchEntity> findAll();
+    Optional<BranchEntity> findById(long id);
+    Optional<BranchEntity> findByName(String name);
+    BranchEntity save(BranchEntity BranchEntity);
 
 }

@@ -4,7 +4,7 @@ package com.Gns.clinica.web.controller;
 import com.Gns.clinica.domain.dto.request.SpecialtyRequestDto;
 import com.Gns.clinica.domain.dto.response.SpecialtyPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.SpecialtyResponseDto;
-import com.Gns.clinica.domain.service.impl.SpecialtyServiceImpl;
+import com.Gns.clinica.domain.service.interfaces.SpecialtyService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/specialties")
 public class SpecialtyController {
-    private final SpecialtyServiceImpl specialtyService;
+    private final SpecialtyService specialtyService;
 
     @Autowired
-    public SpecialtyController(SpecialtyServiceImpl specialtyService) {
+    public SpecialtyController(SpecialtyService specialtyService) {
         this.specialtyService = specialtyService;
     }
 

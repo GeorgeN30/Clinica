@@ -6,18 +6,19 @@ import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityResponseDto;
 import com.Gns.clinica.domain.enums.AvailabilityStatus;
+import com.Gns.clinica.persistence.entity.AvailabilityEntity;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface AvailabilityRepository {
 
-    List<AvailabilityResponseDto> getAll();
-    AvailabilityResponseDto getById(long id);
-    AvailabilityPublicResponseDto getAvailabilityByDateAndStatus(LocalDate date, AvailabilityStatus availabilityStatus);
-    List<AvailabilityPublicResponseDto> getAllAvailabilityBetweenDate(LocalDate date, LocalDate date2, AvailabilityStatus availabilityStatus);
-    AvailabilityRequestDto addAvailability (AvailabilityRequestDto availabilityRequestDto);
-    AvailabilityRequestDto updateAvailability (long id, AvailabilityRequestDto availabilityRequestDto);
-    UpdateAvailabilityStatusDto  updateAvailabilityStatus(long id, UpdateAvailabilityStatusDto availabilityStatusDto);
+    List<AvailabilityEntity> findAll();
+    Optional<AvailabilityEntity> findById(long id);
+    Optional<AvailabilityEntity> findAByDateAndStatus(LocalDate date, AvailabilityStatus availabilityStatus);
+    List<AvailabilityEntity> findAllAvailabilityBetweenDate(LocalDate date, LocalDate date2, AvailabilityStatus availabilityStatus);
+    AvailabilityEntity save (AvailabilityEntity availabilityEntity);
+
 }

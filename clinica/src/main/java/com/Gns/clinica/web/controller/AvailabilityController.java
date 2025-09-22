@@ -4,7 +4,7 @@ import com.Gns.clinica.domain.dto.request.AvailabilityRequestDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateAvailabilityStatusDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityResponseDto;
-import com.Gns.clinica.domain.service.AvailabilityService;
+import com.Gns.clinica.domain.service.interfaces.AvailabilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/availability")
 public class AvailabilityController {
-    private final AvailabilityService  availabilityService;
+    private final AvailabilityService availabilityService;
 
     @Autowired
     public AvailabilityController(AvailabilityService availabilityService) {
@@ -44,17 +44,17 @@ public class AvailabilityController {
     }
 
     @PostMapping
-    public ResponseEntity<AvailabilityRequestDto> addAvailability(@RequestBody AvailabilityRequestDto availabilityRequestDto){
+    public ResponseEntity<AvailabilityPublicResponseDto> addAvailability(@RequestBody AvailabilityRequestDto availabilityRequestDto){
         return ResponseEntity.ok(this.availabilityService.addAvailability(availabilityRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AvailabilityRequestDto> updateAvailability(@PathVariable long id, @RequestBody AvailabilityRequestDto availabilityRequestDto){
+    public ResponseEntity<AvailabilityPublicResponseDto> updateAvailability(@PathVariable long id, @RequestBody AvailabilityRequestDto availabilityRequestDto){
         return ResponseEntity.ok(this.availabilityService.updateAvailability(id, availabilityRequestDto));
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UpdateAvailabilityStatusDto> updateAvailabilityStatus(@PathVariable long id, @RequestBody UpdateAvailabilityStatusDto availabilityStatusDto){
+    public ResponseEntity<AvailabilityPublicResponseDto> updateAvailabilityStatus(@PathVariable long id, @RequestBody UpdateAvailabilityStatusDto availabilityStatusDto){
         return ResponseEntity.ok(this.availabilityService.updateAvailabilityStatus(id, availabilityStatusDto));
     }
 

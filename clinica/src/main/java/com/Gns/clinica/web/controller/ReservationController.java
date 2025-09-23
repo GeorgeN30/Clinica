@@ -5,7 +5,8 @@ import com.Gns.clinica.domain.dto.request.update.UpdateReservationDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateReservationStatusDto;
 import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
-import com.Gns.clinica.domain.service.ReservationService;
+import com.Gns.clinica.domain.service.interfaces.ReservationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class ReservationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservationResponseDto> getById(@PathVariable long id) {
+    public ResponseEntity<ReservationPublicResponseDto> getById(@PathVariable long id) {
         return ResponseEntity.ok(reservationService.getById(id));
     }
 
@@ -43,17 +44,17 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationRequestDto> addReservation(@RequestBody ReservationRequestDto reservationRequestDto) {
+    public ResponseEntity<ReservationPublicResponseDto> addReservation(@Valid @RequestBody ReservationRequestDto reservationRequestDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationService.addReservation(reservationRequestDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservationRequestDto> updateReservation(@PathVariable long id, @RequestBody UpdateReservationDto  updateReservationDto) {
+    public ResponseEntity<ReservationPublicResponseDto> updateReservation(@PathVariable long id, @Valid @RequestBody UpdateReservationDto  updateReservationDto) {
         return ResponseEntity.ok(this.reservationService.updateReservation(id, updateReservationDto));
     }
 
     @PatchMapping("/{dni}")
-    public ResponseEntity<ReservationRequestDto> updateReservationStatus(@PathVariable String dni, @RequestBody UpdateReservationStatusDto updateReservationStatusDto){
+    public ResponseEntity<ReservationPublicResponseDto> updateReservationStatus(@PathVariable String dni, @RequestBody UpdateReservationStatusDto updateReservationStatusDto){
         return ResponseEntity.ok(this.reservationService.updateReservationStatus(dni, updateReservationStatusDto));
     }
 }

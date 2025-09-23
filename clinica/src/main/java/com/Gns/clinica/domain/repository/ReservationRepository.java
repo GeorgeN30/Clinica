@@ -5,15 +5,17 @@ import com.Gns.clinica.domain.dto.request.update.UpdateReservationDto;
 import com.Gns.clinica.domain.dto.request.update.UpdateReservationStatusDto;
 import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
+import com.Gns.clinica.persistence.entity.ReservationEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationRepository {
-    List<ReservationResponseDto> getAll();
-    ReservationResponseDto getById(long id);
-    List<ReservationPublicResponseDto> getAllByDoctorDni(String dni);
-    ReservationPublicResponseDto getPublicReservationByDni(String dni);
-    ReservationRequestDto addReservation(ReservationRequestDto reservationRequestDto);
-    ReservationRequestDto updateReservation(long id, UpdateReservationDto updateReservationDto);
-    ReservationRequestDto updateReservationStatus(String dni, UpdateReservationStatusDto updateReservationStatusDto);
+    List<ReservationEntity> findAll();
+    Optional<ReservationEntity> findById(long id);
+    List<ReservationEntity> findAllByDoctorDni(String dni);
+    Optional<ReservationEntity> findByDoctorDni(String dni);
+    Optional<ReservationEntity> findPublicReservationByDni(String dni);
+    ReservationEntity save(ReservationEntity reservationEntity);
+
 }

@@ -1,70 +1,49 @@
 package com.Gns.clinica.persistence.repository;
-import com.Gns.clinica.domain.dto.request.ReservationRequestDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateReservationDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateReservationStatusDto;
-import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
-import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
 import com.Gns.clinica.domain.repository.ReservationRepository;
 import com.Gns.clinica.persistence.crud.CrudReservationEntity;
 import com.Gns.clinica.persistence.entity.ReservationEntity;
-import com.Gns.clinica.persistence.mapper.ReservationMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ReservationEntityRepository implements ReservationRepository {
     private final CrudReservationEntity crudReservationEntity;
-    private final ReservationMapper reservationMapper;
 
-    public ReservationEntityRepository(CrudReservationEntity crudReservationEntity, ReservationMapper reservationMapper) {
+    @Autowired
+    public ReservationEntityRepository(CrudReservationEntity crudReservationEntity) {
         this.crudReservationEntity = crudReservationEntity;
-        this.reservationMapper = reservationMapper;
     }
 
     @Override
-    public List<ReservationResponseDto> getAll() {
-        return this.reservationMapper.toResponseDto(this.crudReservationEntity.findAll());
+    public List<ReservationEntity> findAll() {
+        return this.crudReservationEntity.findAll();
     }
 
     @Override
-    public ReservationResponseDto getById(long id) {
-        return this.reservationMapper.toResponseDto(this.crudReservationEntity.findById(id).orElse(null));
+    public Optional<ReservationEntity> findById(long id) {
+        return this.crudReservationEntity.findById(id);
     }
 
     @Override
-    public List<ReservationPublicResponseDto> getAllByDoctorDni(String dni) {
-        return this.reservationMapper.toPublicResponseDto(this.crudReservationEntity.findByDoctor_Dni(dni));
+    public List<ReservationEntity> findAllByDoctorDni(String dni) {
+        return this.crudReservationEntity.findAllByDoctor_Dni(dni);
     }
 
     @Override
-    public ReservationPublicResponseDto getPublicReservationByDni(String dni) {
-        return this.reservationMapper.toPublicResponseDto(this.crudReservationEntity.findByPatient_Dni(dni));
+    public Optional<ReservationEntity> findByDoctorDni(String dni) {
+        return this.crudReservationEntity.findByDoctor_Dni(dni);
     }
 
     @Override
-    public ReservationRequestDto addReservation(ReservationRequestDto reservationRequestDto) {
-        ReservationEntity reservationEntity = this.reservationMapper.toEntity(reservationRequestDto);
-        return this.reservationMapper.toRequestDto(this.crudReservationEntity.save(reservationEntity));
+    public Optional<ReservationEntity> findPublicReservationByDni(String dni) {
+        return this.crudReservationEntity.findByPatient_Dni(dni);
     }
 
     @Override
-    public ReservationRequestDto updateReservation(long id, UpdateReservationDto updateReservationDto) {
-        ReservationEntity reservationEntity = this.crudReservationEntity.findById(id).orElse(null);
-        if (reservationEntity == null) {
-            return null;
-        }
-        this.reservationMapper.toUpdateDto(updateReservationDto, reservationEntity);
-        return this.reservationMapper.toRequestDto(reservationEntity);
-    }
-
-    @Override
-    public ReservationRequestDto updateReservationStatus(String dni, UpdateReservationStatusDto updateReservationStatusDto) {
-        ReservationEntity reservationEntity = this.crudReservationEntity.findByPatient_Dni(dni);
-        if (reservationEntity == null) {
-            return null;
-        }
-        this.reservationMapper.toUpdateStatusDto(updateReservationStatusDto, reservationEntity);
-        return this.reservationMapper.toRequestDto(this.crudReservationEntity.save(reservationEntity));
+    public ReservationEntity save(ReservationEntity reservationEntity) {
+        return this.crudReservationEntity.save(reservationEntity);
     }
 }

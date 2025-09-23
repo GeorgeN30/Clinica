@@ -28,15 +28,6 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
 
-    private void validateUserDoesNotExist(UserRequestDto dto) {
-        this.userRepository.findFirstByDni(dto.dni())
-                .ifPresent(m -> { throw new UserAlreadyExistException(dto.dni()); });
-
-        this.userRepository.findFirstByEmail(dto.email())
-                .ifPresent(m -> { throw new EmailAlreadyExistsException(dto.email()); });
-    }
-
-
     @Override
     public UserPublicResponseDto addPatient(UserRequestDto userRequestDto) {
         validateUserDoesNotExist(userRequestDto);
@@ -147,4 +138,13 @@ public class UserServiceImpl implements UserService {
         UserEntity updatedUser = this.userRepository.save(user);
         return userMapper.toPublicResponseDto(updatedUser);
     }
+
+    private void validateUserDoesNotExist(UserRequestDto dto) {
+        this.userRepository.findFirstByDni(dto.dni())
+                .ifPresent(m -> { throw new UserAlreadyExistException(dto.dni()); });
+
+        this.userRepository.findFirstByEmail(dto.email())
+                .ifPresent(m -> { throw new EmailAlreadyExistsException(dto.email()); });
+    }
+
 }

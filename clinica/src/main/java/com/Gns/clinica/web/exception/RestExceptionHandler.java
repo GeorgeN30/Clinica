@@ -2,7 +2,6 @@ package com.Gns.clinica.web.exception;
 
 
 import com.Gns.clinica.domain.exception.*;
-import jakarta.validation.constraints.Email;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -99,7 +98,29 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(AvailabilityInvalidStatusException.class)
+    public ResponseEntity<Error> handleException(AvailabilityInvalidStatusException exception){
+        Error error = new Error("availability-invalid-status", exception.getMessage());
+        return ResponseEntity.badRequest().body(error);
+    }
 
+    @ExceptionHandler(DoctorNotFoundByDniException.class)
+    public ResponseEntity<Error> handleException(DoctorNotFoundByDniException exception){
+        Error error = new Error("doctor-not-found-by-dni", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ReservationNotFoundByDniException.class)
+    public ResponseEntity<Error> handleException(ReservationNotFoundByDniException exception){
+        Error error = new Error("reservation-not-found-by-dni", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ReservationNotFoundByIdException.class)
+    public ResponseEntity<Error> handleException(ReservationNotFoundByIdException exception){
+        Error error = new Error("reservation-not-found-by-id", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {

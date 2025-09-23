@@ -121,6 +121,21 @@ public class RestExceptionHandler {
         Error error = new Error("reservation-not-found-by-id", exception.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
+
+    @ExceptionHandler(ConsultationNotFoundByDniException.class)
+    public ResponseEntity<Error> handleException(ConsultationNotFoundByDniException exception){
+        Error error = new Error("consultation-not-found-by-dni", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ConsultationNotFoundByIdException.class)
+    public ResponseEntity<Error> handleException(ConsultationNotFoundByIdException exception){
+        Error error = new Error("consultation-not-found-by-id", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationExceptions(
             MethodArgumentNotValidException ex) {

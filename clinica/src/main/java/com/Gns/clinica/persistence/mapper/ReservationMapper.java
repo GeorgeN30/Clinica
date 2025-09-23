@@ -55,7 +55,6 @@ public interface ReservationMapper {
     @Mapping(source = "branch.idBranch", target = "idBranch")
     @Mapping(source = "reservationDate", target = "reservationDate")
     @Mapping(source = "reservationTime", target = "reservationTime")
-    @Mapping(source = "status", target = "status")
     ReservationRequestDto toRequestDto(ReservationEntity reservationEntity);
     @InheritInverseConfiguration
     ReservationEntity toEntity(ReservationRequestDto reservationRequestDto);

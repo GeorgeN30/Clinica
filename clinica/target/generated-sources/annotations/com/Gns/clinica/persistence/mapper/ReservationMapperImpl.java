@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-21T15:52:52-0500",
+    date = "2025-09-22T19:17:42-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -144,7 +144,6 @@ public class ReservationMapperImpl implements ReservationMapper {
         Long idBranch = null;
         LocalDate reservationDate = null;
         LocalTime reservationTime = null;
-        ReservationStatus status = null;
 
         idPatient = reservationEntityPatientIdUser( reservationEntity );
         idDoctor = reservationEntityDoctorIdUser( reservationEntity );
@@ -152,9 +151,8 @@ public class ReservationMapperImpl implements ReservationMapper {
         idBranch = reservationEntityBranchIdBranch( reservationEntity );
         reservationDate = reservationEntity.getReservationDate();
         reservationTime = reservationEntity.getReservationTime();
-        status = reservationEntity.getStatus();
 
-        ReservationRequestDto reservationRequestDto = new ReservationRequestDto( idPatient, idDoctor, idBranch, idAvailability, reservationDate, reservationTime, status );
+        ReservationRequestDto reservationRequestDto = new ReservationRequestDto( idPatient, idDoctor, idBranch, idAvailability, reservationDate, reservationTime );
 
         return reservationRequestDto;
     }
@@ -173,7 +171,6 @@ public class ReservationMapperImpl implements ReservationMapper {
         reservationEntity.branch( reservationRequestDtoToBranchEntity( reservationRequestDto ) );
         reservationEntity.reservationDate( reservationRequestDto.reservationDate() );
         reservationEntity.reservationTime( reservationRequestDto.reservationTime() );
-        reservationEntity.status( reservationRequestDto.status() );
 
         return reservationEntity.build();
     }

@@ -3,7 +3,7 @@ package com.Gns.clinica.web.controller;
 import com.Gns.clinica.domain.dto.request.ConsultationRequestDto;
 import com.Gns.clinica.domain.dto.response.ConsultationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ConsultationResponseDto;
-import com.Gns.clinica.domain.service.ConsultationService;
+import com.Gns.clinica.domain.service.interfaces.ConsultationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +43,7 @@ public class ConsultationController {
     }
 
     @PostMapping
-    public ResponseEntity<ConsultationRequestDto> ddConsultation(@RequestBody ConsultationRequestDto consultationRequestDto){
+    public ResponseEntity<ConsultationPublicResponseDto> ddConsultation(@RequestBody ConsultationRequestDto consultationRequestDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(this.consultationService.addConsultation(consultationRequestDto));
     }
 

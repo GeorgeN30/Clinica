@@ -1,15 +1,14 @@
 package com.Gns.clinica.domain.repository;
 
-import com.Gns.clinica.domain.dto.request.ConsultationRequestDto;
-import com.Gns.clinica.domain.dto.response.ConsultationPublicResponseDto;
-import com.Gns.clinica.domain.dto.response.ConsultationResponseDto;
+import com.Gns.clinica.persistence.entity.ConsultationEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ConsultationRepository {
-    List<ConsultationResponseDto> getAll();
-    ConsultationResponseDto getById(long id);
-    List<ConsultationPublicResponseDto> getByDniPatient(String dniPatient);
-    List<ConsultationPublicResponseDto> getByDniDoctor(String dniDoctor);
-    ConsultationRequestDto addConsultation(ConsultationRequestDto consultationRequestDto);
+    List<ConsultationEntity> findAll();
+    Optional<ConsultationEntity> findById(long id);
+    List<ConsultationEntity> findByDniPatient(String dniPatient);
+    List<ConsultationEntity> findByDniDoctor(String dniDoctor);
+    ConsultationEntity save(ConsultationEntity consultationRequestDto);
 }

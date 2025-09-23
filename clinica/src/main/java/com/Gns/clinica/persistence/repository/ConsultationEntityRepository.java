@@ -1,52 +1,45 @@
 package com.Gns.clinica.persistence.repository;
 
-import com.Gns.clinica.domain.dto.request.ConsultationRequestDto;
-import com.Gns.clinica.domain.dto.response.ConsultationPublicResponseDto;
-import com.Gns.clinica.domain.dto.response.ConsultationResponseDto;
 import com.Gns.clinica.domain.repository.ConsultationRepository;
 import com.Gns.clinica.persistence.crud.CrudConsultationEntity;
 import com.Gns.clinica.persistence.entity.ConsultationEntity;
-import com.Gns.clinica.persistence.mapper.ConsultationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ConsultationEntityRepository implements ConsultationRepository {
     private final CrudConsultationEntity crudConsultationEntity;
-    private final ConsultationMapper consultationMapper;
 
     @Autowired
-    public ConsultationEntityRepository(CrudConsultationEntity crudConsultationEntity, ConsultationMapper consultationMapper) {
+    public ConsultationEntityRepository(CrudConsultationEntity crudConsultationEntity) {
         this.crudConsultationEntity = crudConsultationEntity;
-        this.consultationMapper = consultationMapper;
     }
 
     @Override
-    public List<ConsultationResponseDto> getAll() {
-        return this.consultationMapper.toResponseDto(this.crudConsultationEntity.findAll());
+    public List<ConsultationEntity> findAll() {
+        return this.crudConsultationEntity.findAll();
     }
 
     @Override
-    public ConsultationResponseDto getById(long id) {
-        return this.consultationMapper.toResponseDto(this.crudConsultationEntity.findById(id).orElse(null));
+    public Optional<ConsultationEntity> findById(long id) {
+        return this.crudConsultationEntity.findById(id);
     }
 
     @Override
-    public List<ConsultationPublicResponseDto> getByDniPatient(String dniPatient) {
-        return this.consultationMapper.toPublicResponseDto(this.crudConsultationEntity.findByPatient_Dni(dniPatient));
+    public List<ConsultationEntity> findByDniPatient(String dniPatient) {
+        return this.crudConsultationEntity.findByPatient_Dni(dniPatient);
     }
 
     @Override
-    public List<ConsultationPublicResponseDto> getByDniDoctor(String dniDoctor) {
-        return this.consultationMapper.toPublicResponseDto(this.crudConsultationEntity.findByDoctor_Dni(dniDoctor));
+    public List<ConsultationEntity> findByDniDoctor(String dniDoctor) {
+        return this.crudConsultationEntity.findByDoctor_Dni(dniDoctor);
     }
 
-
     @Override
-    public ConsultationRequestDto addConsultation(ConsultationRequestDto consultationRequestDto) {
-        ConsultationEntity  consultationEntity = this.consultationMapper.toEntity(consultationRequestDto);
-        return this.consultationMapper.toRequestDto(this.crudConsultationEntity.save(consultationEntity));
+    public ConsultationEntity save(ConsultationEntity consultationRequestDto) {
+        return this.crudConsultationEntity.save(consultationRequestDto);
     }
 }

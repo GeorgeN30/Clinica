@@ -1,10 +1,5 @@
 package com.Gns.clinica.domain.repository;
 
-import com.Gns.clinica.domain.dto.request.ReservationRequestDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateReservationDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateReservationStatusDto;
-import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
-import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
 import com.Gns.clinica.persistence.entity.ReservationEntity;
 
 import java.util.List;

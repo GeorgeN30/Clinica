@@ -60,12 +60,18 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<ReservationPublicResponseDto> getAllByDoctorDni(String dni) {
-        ReservationEntity reservationEntity = this.reservationRepository.findByDoctorDni(dni)
-                .orElseThrow(()-> new DoctorNotFoundByDniException(dni));
+    public List<ReservationPublicResponseDto> getAllByDoctorDni(String dni, int  maxDays) {
+        LocalDate today = LocalDate.now();
+        LocalDate maxDate = today.plusDays(maxDays);
 
         return this.reservationRepository.findAllByDoctorDni(dni)
                 .stream()
+                .filter(reservation ->{
+                    LocalDate availabilityDate = reservation.getAvailability().getDate();
+                    return availabilityDate.isAfter(today)
+                            && !availabilityDate.isAfter(maxDate)
+                            && reservation.getStatus().equals(ReservationStatus.PENDING);
+                })
                 .map(reservationMapper::toPublicResponseDto)
                 .toList();
     }
@@ -84,26 +90,9 @@ public class ReservationServiceImpl implements ReservationService {
         BranchEntity branch = getBranchOrThrow(reservationRequestDto.idBranch());
         AvailabilityEntity availability = getAvailabilityOrThrow(reservationRequestDto.idAvailability());
 
-
-        if (availability.getStatus() != AvailabilityStatus.AVAILABLE) {
-            throw new AvailabilityInvalidStatusException(reservationRequestDto.idAvailability());
-        }
-
-        LocalDate appointmentDate = availability.getDate();
-        Long doctorId = doctor.getIdUser();
-        Long specialtyId = doctor.getSpecialties().getIdSpecialty();
-
-
-        long doctorReservations = reservationRepository.countByDoctor(appointmentDate, doctorId);
-        if (doctorReservations >= 3) {
-            throw new DoctorReachedDailyReservationLimitException(doctor.getFirstName(), doctor.getLastName());
-        }
-
-        long specialtyReservations = reservationRepository.countBySpecialty(appointmentDate, specialtyId);
-        if (specialtyReservations >= 9) {
-            throw new SpecialtyReachedDailyReservationException();
-        }
-
+        validateAvailability(availability, reservationRequestDto.idAvailability());
+        validateDoctorReservations(doctor, availability.getDate());
+        validateSpecialtyReservations(doctor, availability.getDate());
 
         ReservationEntity reservation = reservationMapper.toEntity(reservationRequestDto);
         reservation.setPatient(patient);
@@ -127,13 +116,8 @@ public class ReservationServiceImpl implements ReservationService {
         BranchEntity updateBranch = getBranchOrThrow(updateReservationDto.idBranch());
         AvailabilityEntity updateAvailability = getAvailabilityOrThrow(updateReservationDto.idAvailability());
 
-        if (updateAvailability.getDate().isBefore(LocalDate.now())) {
-            throw new AvailabilityInvalidDateException(updateAvailability.getDate());
-        }
-        if (updateAvailability.getStatus() != AvailabilityStatus.AVAILABLE) {
-            throw new AvailabilityInvalidStatusException(updateReservationDto.idAvailability());
-        }
-
+        validateAvailabilityDate(updateAvailability);
+        validateAvailabilityStatus(updateAvailability, updateReservationDto.idAvailability());
 
         reservation.setDoctor(updateDoctor);
         reservation.setBranch(updateBranch);
@@ -180,4 +164,37 @@ public class ReservationServiceImpl implements ReservationService {
                 .orElseThrow(() -> new AvailabilityNotFoundException(id));
     }
 
+    private void validateAvailability(AvailabilityEntity availability, Long availabilityId) {
+        if (availability.getStatus() != AvailabilityStatus.AVAILABLE) {
+            throw new AvailabilityInvalidStatusException(availabilityId);
+        }
+    }
+
+    private void validateDoctorReservations(UserEntity doctor, LocalDate appointmentDate) {
+        long doctorReservations = reservationRepository.countByDoctor(appointmentDate, doctor.getIdUser());
+        if (doctorReservations >= 3) {
+            throw new DoctorReachedDailyReservationLimitException(doctor.getFirstName(), doctor.getLastName());
+        }
+    }
+
+    private void validateSpecialtyReservations(UserEntity doctor, LocalDate appointmentDate) {
+        Long specialtyId = doctor.getSpecialties().getIdSpecialty();
+        long specialtyReservations = reservationRepository.countBySpecialty(appointmentDate, specialtyId);
+        if (specialtyReservations >= 9) {
+            throw new SpecialtyReachedDailyReservationException();
+        }
+
+    }
+
+    private void validateAvailabilityDate(AvailabilityEntity availability) {
+        if (availability.getDate().isBefore(LocalDate.now())) {
+            throw new AvailabilityInvalidDateException(availability.getDate());
+        }
+    }
+
+    private void validateAvailabilityStatus(AvailabilityEntity availability, Long availabilityId) {
+        if (availability.getStatus() != AvailabilityStatus.AVAILABLE) {
+            throw new AvailabilityInvalidStatusException(availabilityId);
+        }
+    }
 }

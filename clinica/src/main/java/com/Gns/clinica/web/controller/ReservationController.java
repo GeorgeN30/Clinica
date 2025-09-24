@@ -34,8 +34,8 @@ public class ReservationController {
     }
 
     @GetMapping("/doctor/{dni}")
-    public ResponseEntity<List<ReservationPublicResponseDto>> getAllByDoctorDni(@PathVariable String dni) {
-        return ResponseEntity.ok(reservationService.getAllByDoctorDni(dni));
+    public ResponseEntity<List<ReservationPublicResponseDto>> getAllByDoctorDni(@PathVariable String dni, @RequestParam(defaultValue = "7") int maxDays) {
+        return ResponseEntity.ok(reservationService.getAllByDoctorDni(dni, maxDays));
     }
 
     @GetMapping("/patient/{dni}")

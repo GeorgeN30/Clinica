@@ -12,7 +12,7 @@ import java.util.List;
 public interface ReservationService {
     List<ReservationResponseDto> getAll();
     ReservationPublicResponseDto getById(long id);
-    List<ReservationPublicResponseDto> getAllByDoctorDni(String dni);
+    List<ReservationPublicResponseDto> getAllByDoctorDni(String dni, int maxDays);
     ReservationPublicResponseDto getPublicReservationByDni(String dni);
     ReservationPublicResponseDto addReservation(ReservationRequestDto reservationRequestDto);
     ReservationPublicResponseDto updateReservation(long id, UpdateReservationDto updateReservationDto);

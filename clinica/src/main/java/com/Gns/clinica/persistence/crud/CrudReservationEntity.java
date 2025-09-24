@@ -4,7 +4,6 @@ import com.Gns.clinica.persistence.entity.ReservationEntity;
 import org.springframework.data.repository.ListCrudRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 

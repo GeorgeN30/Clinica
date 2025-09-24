@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -32,9 +33,10 @@ public class ReservationServiceImpl implements ReservationService {
     private final UserRepository userRepository;
     private final BranchRepository branchRepository;
 
+
     @Autowired
-    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationRepository reservationRepository1, ReservationMapper reservationMapper, AvailabilityRepository availabilityRepository, UserRepository userRepository, BranchRepository branchRepository) {
-        this.reservationRepository = reservationRepository1;
+    public ReservationServiceImpl(ReservationRepository reservationRepository, ReservationMapper reservationMapper, AvailabilityRepository availabilityRepository, UserRepository userRepository, BranchRepository branchRepository) {
+        this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
         this.availabilityRepository = availabilityRepository;
         this.userRepository = userRepository;
@@ -83,18 +85,33 @@ public class ReservationServiceImpl implements ReservationService {
         AvailabilityEntity availability = getAvailabilityOrThrow(reservationRequestDto.idAvailability());
 
 
-        if (reservationRequestDto.reservationDate().isBefore(LocalDate.now())) {
-            throw new AvailabilityInvalidDateException(reservationRequestDto.reservationDate());
-        }
         if (availability.getStatus() != AvailabilityStatus.AVAILABLE) {
             throw new AvailabilityInvalidStatusException(reservationRequestDto.idAvailability());
         }
+
+        LocalDate appointmentDate = availability.getDate();
+        Long doctorId = doctor.getIdUser();
+        Long specialtyId = doctor.getSpecialties().getIdSpecialty();
+
+
+        long doctorReservations = reservationRepository.countByDoctor(appointmentDate, doctorId);
+        if (doctorReservations >= 3) {
+            throw new DoctorReachedDailyReservationLimitException(doctor.getFirstName(), doctor.getLastName());
+        }
+
+        long specialtyReservations = reservationRepository.countBySpecialty(appointmentDate, specialtyId);
+        if (specialtyReservations >= 9) {
+            throw new SpecialtyReachedDailyReservationException();
+        }
+
 
         ReservationEntity reservation = reservationMapper.toEntity(reservationRequestDto);
         reservation.setPatient(patient);
         reservation.setDoctor(doctor);
         reservation.setBranch(branch);
         reservation.setAvailability(availability);
+        reservation.setReservationDate(LocalDate.now());
+        reservation.setReservationTime(LocalTime.now());
         reservation.setStatus(ReservationStatus.PENDING);
 
         return reservationMapper.toPublicResponseDto(reservationRepository.save(reservation));
@@ -110,9 +127,8 @@ public class ReservationServiceImpl implements ReservationService {
         BranchEntity updateBranch = getBranchOrThrow(updateReservationDto.idBranch());
         AvailabilityEntity updateAvailability = getAvailabilityOrThrow(updateReservationDto.idAvailability());
 
-
-        if (updateReservationDto.reservationDate().isBefore(LocalDate.now())) {
-            throw new AvailabilityInvalidDateException(updateReservationDto.reservationDate());
+        if (updateAvailability.getDate().isBefore(LocalDate.now())) {
+            throw new AvailabilityInvalidDateException(updateAvailability.getDate());
         }
         if (updateAvailability.getStatus() != AvailabilityStatus.AVAILABLE) {
             throw new AvailabilityInvalidStatusException(updateReservationDto.idAvailability());
@@ -122,8 +138,8 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setDoctor(updateDoctor);
         reservation.setBranch(updateBranch);
         reservation.setAvailability(updateAvailability);
-        reservation.setReservationDate(updateReservationDto.reservationDate());
-        reservation.setReservationTime(updateReservationDto.reservationTime());
+        reservation.setReservationDate(LocalDate.now());
+        reservation.setReservationTime(LocalTime.now());
 
         return reservationMapper.toPublicResponseDto(reservationRepository.save(reservation));
     }
@@ -136,6 +152,16 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setStatus(updateReservationStatusDto.status());
         ReservationEntity updatedReservation = reservationRepository.save(reservation);
         return reservationMapper.toPublicResponseDto(updatedReservation);
+    }
+
+    @Override
+    public long countByDoctor(LocalDate date, long doctorId) {
+        return this.reservationRepository.countByDoctor(date, doctorId);
+    }
+
+    @Override
+    public long countBySpecialty(LocalDate date, long specialtyId) {
+        return this.reservationRepository.countBySpecialty(date, specialtyId);
     }
 
 

@@ -3,6 +3,7 @@ package com.Gns.clinica.domain.service.impl;
 import com.Gns.clinica.domain.dto.request.ConsultationRequestDto;
 import com.Gns.clinica.domain.dto.response.ConsultationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ConsultationResponseDto;
+import com.Gns.clinica.domain.enums.ReservationStatus;
 import com.Gns.clinica.domain.exception.ConsultationNotFoundByDniException;
 import com.Gns.clinica.domain.exception.ConsultationNotFoundByIdException;
 import com.Gns.clinica.domain.exception.ReservationNotFoundByIdException;
@@ -87,6 +88,7 @@ public class ConsultationServiceImpl implements ConsultationService {
         ReservationEntity reservation = reservationRepository.findById(consultationRequestDto.idReservation())
                 .orElseThrow(() -> new ReservationNotFoundByIdException(consultationRequestDto.idReservation()));
 
+        reservation.setStatus(ReservationStatus.COMPLETED);
 
         ConsultationEntity consultation = consultationMapper.toEntity(consultationRequestDto);
         consultation.setPatient(patient);

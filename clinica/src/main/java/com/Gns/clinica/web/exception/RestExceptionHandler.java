@@ -134,6 +134,18 @@ public class RestExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(DoctorReachedDailyReservationLimitException.class)
+    public ResponseEntity<Error> handleException(DoctorReachedDailyReservationLimitException exception){
+        Error error = new Error("doctor-reached-max-limit-reservation", exception.getMessage());
+        return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(SpecialtyReachedDailyReservationException.class)
+    public ResponseEntity<Error> handleException(SpecialtyReachedDailyReservationException exception){
+        Error error = new Error("specialty-reached-max-limit-reservation", exception.getMessage());
+        return ResponseEntity.badRequest().body(error);
+    }
+
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

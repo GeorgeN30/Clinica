@@ -2,6 +2,7 @@ package com.Gns.clinica.domain.dto.request;
 
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 
 import java.time.LocalDate;
@@ -22,14 +23,7 @@ public record ReservationRequestDto(
 
         @NotNull(message = "Availability ID is required")
         @Positive(message = "Availability ID must be a positive number")
-        Long idAvailability,
-
-        @NotNull(message = "Reservation date is required")
-        @FutureOrPresent(message = "Reservation date must be today or in the future")
-        LocalDate reservationDate,
-
-        @NotNull(message = "Reservation time is required")
-        LocalTime reservationTime
+        Long idAvailability
 
 ) {
 }

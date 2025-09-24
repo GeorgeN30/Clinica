@@ -8,6 +8,7 @@ import java.time.LocalTime;
 public record AvailabilityResponseDto(
         Long idAvailability,
         Long idDoctor,
+        String nameDoctor,
         Long idSpecialty,
         String nameSpecialty,
         LocalDate date,

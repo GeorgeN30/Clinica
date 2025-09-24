@@ -8,9 +8,12 @@ import com.Gns.clinica.domain.enums.AvailabilityStatus;
 import com.Gns.clinica.domain.exception.AvailabilityInvalidDateException;
 import com.Gns.clinica.domain.exception.AvailabilityNotFoundByDateException;
 import com.Gns.clinica.domain.exception.AvailabilityNotFoundException;
+import com.Gns.clinica.domain.exception.UserNotFoundByIdException;
 import com.Gns.clinica.domain.repository.AvailabilityRepository;
+import com.Gns.clinica.domain.repository.UserRepository;
 import com.Gns.clinica.domain.service.interfaces.AvailabilityService;
 import com.Gns.clinica.persistence.entity.AvailabilityEntity;
+import com.Gns.clinica.persistence.entity.UserEntity;
 import com.Gns.clinica.persistence.mapper.AvailabilityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +26,13 @@ import java.util.List;
 public class AvailabilityServiceImpl implements AvailabilityService {
     private final AvailabilityRepository availabilityRepository;
     private final AvailabilityMapper availabilityMapper;
+    private final UserRepository userRepository;
 
     @Autowired
-    public AvailabilityServiceImpl(AvailabilityRepository availabilityRepository, AvailabilityMapper availabilityMapper) {
+    public AvailabilityServiceImpl(AvailabilityRepository availabilityRepository, AvailabilityMapper availabilityMapper, UserRepository userRepository) {
         this.availabilityRepository = availabilityRepository;
         this.availabilityMapper = availabilityMapper;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -70,12 +75,15 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
     @Override
     public AvailabilityPublicResponseDto addAvailability(AvailabilityRequestDto availabilityRequestDto) {
-        LocalDate date = availabilityRequestDto.date(); // o date()
+        LocalDate date = availabilityRequestDto.date();
         if (date.isBefore(LocalDate.now())) {
             throw new AvailabilityInvalidDateException(date);
         }
+        UserEntity doctor = userRepository.findById(availabilityRequestDto.idDoctor())
+                .orElseThrow(() -> new UserNotFoundByIdException(availabilityRequestDto.idDoctor()));
 
         AvailabilityEntity entity = availabilityMapper.toEntity(availabilityRequestDto);
+        entity.setDoctor(doctor);
         entity.setStatus(AvailabilityStatus.AVAILABLE);
         AvailabilityEntity saved = availabilityRepository.save(entity);
 

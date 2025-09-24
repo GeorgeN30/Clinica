@@ -6,6 +6,7 @@ import com.Gns.clinica.domain.dto.request.update.UpdateReservationStatusDto;
 import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservationService {
@@ -16,4 +17,6 @@ public interface ReservationService {
     ReservationPublicResponseDto addReservation(ReservationRequestDto reservationRequestDto);
     ReservationPublicResponseDto updateReservation(long id, UpdateReservationDto updateReservationDto);
     ReservationPublicResponseDto updateReservationStatus(String dni, UpdateReservationStatusDto updateReservationStatusDto);
+    long countByDoctor(LocalDate date, long doctorId);
+    long countBySpecialty(LocalDate date, long specialtyId);
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-21T15:52:52-0500",
+    date = "2025-09-23T22:26:33-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -117,16 +117,5 @@ public class BranchMapperImpl implements BranchMapper {
         BranchRequestDto branchRequestDto = new BranchRequestDto( name, address, phone );
 
         return branchRequestDto;
-    }
-
-    @Override
-    public void updateEntityFromDto(BranchRequestDto branchRequestDto, BranchEntity branchEntity) {
-        if ( branchRequestDto == null ) {
-            return;
-        }
-
-        branchEntity.setName( branchRequestDto.name() );
-        branchEntity.setAddress( branchRequestDto.address() );
-        branchEntity.setPhone( branchRequestDto.phone() );
     }
 }

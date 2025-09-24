@@ -5,6 +5,7 @@ import com.Gns.clinica.persistence.entity.ReservationEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,11 +40,23 @@ public class ReservationEntityRepository implements ReservationRepository {
 
     @Override
     public Optional<ReservationEntity> findPublicReservationByDni(String dni) {
-        return this.crudReservationEntity.findByPatient_Dni(dni);
+        return this.crudReservationEntity.findFirstByPatient_DniOrderByReservationDateDesc(dni);
     }
 
     @Override
     public ReservationEntity save(ReservationEntity reservationEntity) {
         return this.crudReservationEntity.save(reservationEntity);
+    }
+
+    @Override
+    public Long countByDoctor(LocalDate date, Long doctorId) {
+        return this.crudReservationEntity
+                .countByAvailability_DateAndDoctor_IdUser(date, doctorId);
+    }
+
+    @Override
+    public Long countBySpecialty(LocalDate date, Long specialtyId) {
+       return this.crudReservationEntity
+               .countByAvailability_DateAndDoctor_Specialties_IdSpecialty(date, specialtyId);
     }
 }

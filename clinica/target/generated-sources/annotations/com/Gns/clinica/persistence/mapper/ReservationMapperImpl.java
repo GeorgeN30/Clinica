@@ -1,8 +1,6 @@
 package com.Gns.clinica.persistence.mapper;
 
 import com.Gns.clinica.domain.dto.request.ReservationRequestDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateReservationDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateReservationStatusDto;
 import com.Gns.clinica.domain.dto.response.ReservationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ReservationResponseDto;
 import com.Gns.clinica.domain.enums.ReservationStatus;
@@ -20,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-22T19:17:42-0500",
+    date = "2025-09-23T22:26:33-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -142,17 +140,13 @@ public class ReservationMapperImpl implements ReservationMapper {
         Long idDoctor = null;
         Long idAvailability = null;
         Long idBranch = null;
-        LocalDate reservationDate = null;
-        LocalTime reservationTime = null;
 
         idPatient = reservationEntityPatientIdUser( reservationEntity );
         idDoctor = reservationEntityDoctorIdUser( reservationEntity );
         idAvailability = reservationEntityAvailabilityIdAvailability( reservationEntity );
         idBranch = reservationEntityBranchIdBranch( reservationEntity );
-        reservationDate = reservationEntity.getReservationDate();
-        reservationTime = reservationEntity.getReservationTime();
 
-        ReservationRequestDto reservationRequestDto = new ReservationRequestDto( idPatient, idDoctor, idBranch, idAvailability, reservationDate, reservationTime );
+        ReservationRequestDto reservationRequestDto = new ReservationRequestDto( idPatient, idDoctor, idBranch, idAvailability );
 
         return reservationRequestDto;
     }
@@ -169,41 +163,8 @@ public class ReservationMapperImpl implements ReservationMapper {
         reservationEntity.doctor( reservationRequestDtoToUserEntity1( reservationRequestDto ) );
         reservationEntity.availability( reservationRequestDtoToAvailabilityEntity( reservationRequestDto ) );
         reservationEntity.branch( reservationRequestDtoToBranchEntity( reservationRequestDto ) );
-        reservationEntity.reservationDate( reservationRequestDto.reservationDate() );
-        reservationEntity.reservationTime( reservationRequestDto.reservationTime() );
 
         return reservationEntity.build();
-    }
-
-    @Override
-    public void toUpdateDto(UpdateReservationDto updateReservationDto, ReservationEntity reservationEntity) {
-        if ( updateReservationDto == null ) {
-            return;
-        }
-
-        if ( reservationEntity.getDoctor() == null ) {
-            reservationEntity.setDoctor( UserEntity.builder().build() );
-        }
-        updateReservationDtoToUserEntity( updateReservationDto, reservationEntity.getDoctor() );
-        if ( reservationEntity.getBranch() == null ) {
-            reservationEntity.setBranch( BranchEntity.builder().build() );
-        }
-        updateReservationDtoToBranchEntity( updateReservationDto, reservationEntity.getBranch() );
-        if ( reservationEntity.getAvailability() == null ) {
-            reservationEntity.setAvailability( AvailabilityEntity.builder().build() );
-        }
-        updateReservationDtoToAvailabilityEntity( updateReservationDto, reservationEntity.getAvailability() );
-        reservationEntity.setReservationDate( updateReservationDto.reservationDate() );
-        reservationEntity.setReservationTime( updateReservationDto.reservationTime() );
-    }
-
-    @Override
-    public void toUpdateStatusDto(UpdateReservationStatusDto updateReservationStatusDto, ReservationEntity reservationEntity) {
-        if ( updateReservationStatusDto == null ) {
-            return;
-        }
-
-        reservationEntity.setStatus( updateReservationStatusDto.status() );
     }
 
     private Long reservationEntityPatientIdUser(ReservationEntity reservationEntity) {
@@ -421,29 +382,5 @@ public class ReservationMapperImpl implements ReservationMapper {
         branchEntity.idBranch( reservationRequestDto.idBranch() );
 
         return branchEntity.build();
-    }
-
-    protected void updateReservationDtoToUserEntity(UpdateReservationDto updateReservationDto, UserEntity mappingTarget) {
-        if ( updateReservationDto == null ) {
-            return;
-        }
-
-        mappingTarget.setIdUser( updateReservationDto.idDoctor() );
-    }
-
-    protected void updateReservationDtoToBranchEntity(UpdateReservationDto updateReservationDto, BranchEntity mappingTarget) {
-        if ( updateReservationDto == null ) {
-            return;
-        }
-
-        mappingTarget.setIdBranch( updateReservationDto.idBranch() );
-    }
-
-    protected void updateReservationDtoToAvailabilityEntity(UpdateReservationDto updateReservationDto, AvailabilityEntity mappingTarget) {
-        if ( updateReservationDto == null ) {
-            return;
-        }
-
-        mappingTarget.setIdAvailability( updateReservationDto.idAvailability() );
     }
 }

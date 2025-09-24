@@ -53,24 +53,9 @@ public interface ReservationMapper {
     @Mapping(source = "doctor.idUser", target = "idDoctor")
     @Mapping(source = "availability.idAvailability", target = "idAvailability")
     @Mapping(source = "branch.idBranch", target = "idBranch")
-    @Mapping(source = "reservationDate", target = "reservationDate")
-    @Mapping(source = "reservationTime", target = "reservationTime")
     ReservationRequestDto toRequestDto(ReservationEntity reservationEntity);
     @InheritInverseConfiguration
     ReservationEntity toEntity(ReservationRequestDto reservationRequestDto);
-
-
-    @Mapping(source = "idDoctor", target = "doctor.idUser")
-    @Mapping(source = "idBranch", target = "branch.idBranch")
-    @Mapping(source = "idAvailability", target = "availability.idAvailability")
-    @Mapping(source = "reservationDate", target = "reservationDate")
-    @Mapping(source = "reservationTime", target = "reservationTime")
-    void toUpdateDto(UpdateReservationDto updateReservationDto, @MappingTarget ReservationEntity reservationEntity);
-
-
-    @Mapping(source = "status", target = "status")
-    void toUpdateStatusDto(UpdateReservationStatusDto updateReservationStatusDto, @MappingTarget ReservationEntity reservationEntity);
-
 
 
     default UserEntity map(Long idDoctor) {

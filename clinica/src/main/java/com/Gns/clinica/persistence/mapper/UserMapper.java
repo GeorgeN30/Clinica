@@ -54,17 +54,6 @@ public interface UserMapper {
     @Mapping(source = "specialties.nameSpecialty", target = "nameSpecialty")
     UserPublicResponseDto toPublicResponseDto(UserEntity userEntity);
 
-    @Mapping(source = "firstName", target = "firstName")
-    @Mapping(source = "lastName", target = "lastName")
-    @Mapping(source = "email", target = "email")
-    @Mapping(source = "idSpecialty",target = "specialties")
-    void updateEntityFromDto(UpdateUserDto updateUserDto, @MappingTarget UserEntity userEntity);
-
-    @Mapping(source = "status", target = "status")
-    @Mapping(source = "disabled", target = "disabled")
-    @Mapping(source = "locked", target = "locked")
-    void updateStatusEntityFromDto(UpdateUserStatusDto  updateUserStatusDto, @MappingTarget UserEntity userEntity);
-
     default Long map(SpecialtyEntity specialty) {
         return specialty != null ? specialty.getIdSpecialty() : null;
     }

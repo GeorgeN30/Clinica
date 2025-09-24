@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-21T18:07:34-0500",
+    date = "2025-09-23T22:26:34-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -103,14 +103,5 @@ public class SpecialtyMapperImpl implements SpecialtyMapper {
         specialtyEntity.nameSpecialty( specialtyRequestDto.nameSpecialty() );
 
         return specialtyEntity.build();
-    }
-
-    @Override
-    public void updateEntityFromDto(SpecialtyRequestDto specialtyRequestDto, SpecialtyEntity specialtyEntity) {
-        if ( specialtyRequestDto == null ) {
-            return;
-        }
-
-        specialtyEntity.setNameSpecialty( specialtyRequestDto.nameSpecialty() );
     }
 }

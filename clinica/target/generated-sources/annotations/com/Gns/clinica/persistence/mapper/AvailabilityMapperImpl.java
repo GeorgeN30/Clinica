@@ -1,7 +1,6 @@
 package com.Gns.clinica.persistence.mapper;
 
 import com.Gns.clinica.domain.dto.request.AvailabilityRequestDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateAvailabilityStatusDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityResponseDto;
 import com.Gns.clinica.domain.enums.AvailabilityStatus;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-21T15:52:53-0500",
+    date = "2025-09-23T22:49:20-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -31,6 +30,7 @@ public class AvailabilityMapperImpl implements AvailabilityMapper {
 
         Long idAvailability = null;
         Long idDoctor = null;
+        String nameDoctor = null;
         Long idSpecialty = null;
         String nameSpecialty = null;
         LocalDate date = null;
@@ -40,6 +40,7 @@ public class AvailabilityMapperImpl implements AvailabilityMapper {
 
         idAvailability = availabilityEntity.getIdAvailability();
         idDoctor = availabilityEntityDoctorIdUser( availabilityEntity );
+        nameDoctor = availabilityEntityDoctorFirstName( availabilityEntity );
         idSpecialty = availabilityEntityDoctorSpecialtiesIdSpecialty( availabilityEntity );
         nameSpecialty = availabilityEntityDoctorSpecialtiesNameSpecialty( availabilityEntity );
         date = availabilityEntity.getDate();
@@ -47,7 +48,7 @@ public class AvailabilityMapperImpl implements AvailabilityMapper {
         endTime = availabilityEntity.getEndTime();
         status = availabilityEntity.getStatus();
 
-        AvailabilityResponseDto availabilityResponseDto = new AvailabilityResponseDto( idAvailability, idDoctor, idSpecialty, nameSpecialty, date, startTime, endTime, status );
+        AvailabilityResponseDto availabilityResponseDto = new AvailabilityResponseDto( idAvailability, idDoctor, nameDoctor, idSpecialty, nameSpecialty, date, startTime, endTime, status );
 
         return availabilityResponseDto;
     }
@@ -143,43 +144,6 @@ public class AvailabilityMapperImpl implements AvailabilityMapper {
         return availabilityEntity.build();
     }
 
-    @Override
-    public void updateToEntityFromDto(AvailabilityRequestDto availabilityRequestDto, AvailabilityEntity availabilityEntity) {
-        if ( availabilityRequestDto == null ) {
-            return;
-        }
-
-        availabilityEntity.setDoctor( map( availabilityRequestDto.idDoctor() ) );
-        availabilityEntity.setDate( availabilityRequestDto.date() );
-        availabilityEntity.setStartTime( availabilityRequestDto.startTime() );
-        availabilityEntity.setEndTime( availabilityRequestDto.endTime() );
-        availabilityEntity.setStatus( availabilityRequestDto.status() );
-    }
-
-    @Override
-    public void updateStatusToEntityFromDto(UpdateAvailabilityStatusDto updateAvailabilityStatusDto, AvailabilityEntity availabilityEntity) {
-        if ( updateAvailabilityStatusDto == null ) {
-            return;
-        }
-
-        availabilityEntity.setStatus( updateAvailabilityStatusDto.status() );
-    }
-
-    @Override
-    public UpdateAvailabilityStatusDto toStatusRequestDto(AvailabilityEntity availabilityEntity) {
-        if ( availabilityEntity == null ) {
-            return null;
-        }
-
-        AvailabilityStatus status = null;
-
-        status = availabilityEntity.getStatus();
-
-        UpdateAvailabilityStatusDto updateAvailabilityStatusDto = new UpdateAvailabilityStatusDto( status );
-
-        return updateAvailabilityStatusDto;
-    }
-
     private Long availabilityEntityDoctorIdUser(AvailabilityEntity availabilityEntity) {
         if ( availabilityEntity == null ) {
             return null;
@@ -193,6 +157,21 @@ public class AvailabilityMapperImpl implements AvailabilityMapper {
             return null;
         }
         return idUser;
+    }
+
+    private String availabilityEntityDoctorFirstName(AvailabilityEntity availabilityEntity) {
+        if ( availabilityEntity == null ) {
+            return null;
+        }
+        UserEntity doctor = availabilityEntity.getDoctor();
+        if ( doctor == null ) {
+            return null;
+        }
+        String firstName = doctor.getFirstName();
+        if ( firstName == null ) {
+            return null;
+        }
+        return firstName;
     }
 
     private Long availabilityEntityDoctorSpecialtiesIdSpecialty(AvailabilityEntity availabilityEntity) {
@@ -231,21 +210,6 @@ public class AvailabilityMapperImpl implements AvailabilityMapper {
             return null;
         }
         return nameSpecialty;
-    }
-
-    private String availabilityEntityDoctorFirstName(AvailabilityEntity availabilityEntity) {
-        if ( availabilityEntity == null ) {
-            return null;
-        }
-        UserEntity doctor = availabilityEntity.getDoctor();
-        if ( doctor == null ) {
-            return null;
-        }
-        String firstName = doctor.getFirstName();
-        if ( firstName == null ) {
-            return null;
-        }
-        return firstName;
     }
 
     protected UserEntity availabilityRequestDtoToUserEntity(AvailabilityRequestDto availabilityRequestDto) {

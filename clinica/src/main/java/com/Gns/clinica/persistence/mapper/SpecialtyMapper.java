@@ -7,7 +7,6 @@ import com.Gns.clinica.persistence.entity.SpecialtyEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -30,8 +29,5 @@ public interface SpecialtyMapper {
     @InheritInverseConfiguration
     SpecialtyEntity toEntity(SpecialtyRequestDto specialtyRequestDto);
 
-
-    @Mapping(source = "nameSpecialty", target = "nameSpecialty")
-    void updateEntityFromDto(SpecialtyRequestDto specialtyRequestDto, @MappingTarget SpecialtyEntity specialtyEntity);
 
 }

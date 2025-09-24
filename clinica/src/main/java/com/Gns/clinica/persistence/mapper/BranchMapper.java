@@ -35,5 +35,4 @@ public interface BranchMapper {
     BranchRequestDto toRequestDto(BranchEntity branchEntity);
 
 
-    void updateEntityFromDto(BranchRequestDto branchRequestDto, @MappingTarget BranchEntity branchEntity);
 }

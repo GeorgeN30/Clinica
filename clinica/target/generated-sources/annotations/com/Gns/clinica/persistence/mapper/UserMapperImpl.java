@@ -1,8 +1,6 @@
 package com.Gns.clinica.persistence.mapper;
 
 import com.Gns.clinica.domain.dto.request.UserRequestDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateUserDto;
-import com.Gns.clinica.domain.dto.request.update.UpdateUserStatusDto;
 import com.Gns.clinica.domain.dto.response.UserPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.UserResponseDto;
 import com.Gns.clinica.domain.enums.Role;
@@ -16,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-21T15:52:53-0500",
+    date = "2025-09-23T22:26:33-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -154,30 +152,6 @@ public class UserMapperImpl implements UserMapper {
         UserPublicResponseDto userPublicResponseDto = new UserPublicResponseDto( dni, firstName, lastName, email, phone, nameSpecialty );
 
         return userPublicResponseDto;
-    }
-
-    @Override
-    public void updateEntityFromDto(UpdateUserDto updateUserDto, UserEntity userEntity) {
-        if ( updateUserDto == null ) {
-            return;
-        }
-
-        userEntity.setFirstName( updateUserDto.firstName() );
-        userEntity.setLastName( updateUserDto.lastName() );
-        userEntity.setEmail( updateUserDto.email() );
-        userEntity.setSpecialties( map( updateUserDto.idSpecialty() ) );
-        userEntity.setPhone( updateUserDto.phone() );
-    }
-
-    @Override
-    public void updateStatusEntityFromDto(UpdateUserStatusDto updateUserStatusDto, UserEntity userEntity) {
-        if ( updateUserStatusDto == null ) {
-            return;
-        }
-
-        userEntity.setStatus( updateUserStatusDto.status() );
-        userEntity.setDisabled( updateUserStatusDto.disabled() );
-        userEntity.setLocked( updateUserStatusDto.locked() );
     }
 
     private Long userEntitySpecialtiesIdSpecialty(UserEntity userEntity) {

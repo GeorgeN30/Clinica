@@ -4,6 +4,7 @@ import com.Gns.clinica.domain.dto.request.ConsultationRequestDto;
 import com.Gns.clinica.domain.dto.response.ConsultationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ConsultationResponseDto;
 import com.Gns.clinica.persistence.entity.ConsultationEntity;
+import com.Gns.clinica.persistence.entity.ReservationEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -57,5 +58,11 @@ public interface ConsultationMapper {
     ConsultationEntity toEntity(ConsultationRequestDto requestDto);
 
 
+    default ReservationEntity map(Long idReservation) {
+        if (idReservation == null) return null;
+        ReservationEntity reservation = new ReservationEntity();
+        reservation.setIdReservation(idReservation);
+        return reservation;
+    }
 
 }

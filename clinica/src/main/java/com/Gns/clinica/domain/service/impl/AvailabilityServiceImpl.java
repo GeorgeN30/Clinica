@@ -5,10 +5,7 @@ import com.Gns.clinica.domain.dto.request.update.UpdateAvailabilityStatusDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.AvailabilityResponseDto;
 import com.Gns.clinica.domain.enums.AvailabilityStatus;
-import com.Gns.clinica.domain.exception.AvailabilityInvalidDateException;
-import com.Gns.clinica.domain.exception.AvailabilityNotFoundByDateException;
-import com.Gns.clinica.domain.exception.AvailabilityNotFoundException;
-import com.Gns.clinica.domain.exception.UserNotFoundByIdException;
+import com.Gns.clinica.domain.exception.*;
 import com.Gns.clinica.domain.repository.AvailabilityRepository;
 import com.Gns.clinica.domain.repository.UserRepository;
 import com.Gns.clinica.domain.service.interfaces.AvailabilityService;
@@ -82,10 +79,15 @@ public class AvailabilityServiceImpl implements AvailabilityService {
         UserEntity doctor = userRepository.findById(availabilityRequestDto.idDoctor())
                 .orElseThrow(() -> new UserNotFoundByIdException(availabilityRequestDto.idDoctor()));
 
+        this.availabilityRepository.findByDoctorAndDate(doctor.getIdUser(), date)
+                .ifPresent(existing -> {
+                    throw new DoctorAlreadyHasAvailabilityException(doctor.getFirstName(), doctor.getLastName(), date);
+                });
+
         AvailabilityEntity entity = availabilityMapper.toEntity(availabilityRequestDto);
         entity.setDoctor(doctor);
         entity.setStatus(AvailabilityStatus.AVAILABLE);
-        AvailabilityEntity saved = availabilityRepository.save(entity);
+        AvailabilityEntity saved = this.availabilityRepository.save(entity);
 
         return availabilityMapper.toPublicResponseDto(saved);
     }

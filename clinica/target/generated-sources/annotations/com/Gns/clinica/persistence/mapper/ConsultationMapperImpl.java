@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-23T19:31:55-0500",
+    date = "2025-09-23T23:30:08-0500",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Microsoft)"
 )
 @Component
@@ -124,24 +124,18 @@ public class ConsultationMapperImpl implements ConsultationMapper {
         }
 
         Long idReservation = null;
-        Long idPatient = null;
-        Long idDoctor = null;
-        LocalDate consultationDate = null;
         String reason = null;
         String diagnosis = null;
         String treatment = null;
         String notes = null;
 
         idReservation = consultationEntityReservationIdReservation( consultationEntity );
-        idPatient = consultationEntityPatientIdUser( consultationEntity );
-        idDoctor = consultationEntityDoctorIdUser( consultationEntity );
-        consultationDate = consultationEntity.getConsultationDate();
         reason = consultationEntity.getReason();
         diagnosis = consultationEntity.getDiagnosis();
         treatment = consultationEntity.getTreatment();
         notes = consultationEntity.getNotes();
 
-        ConsultationRequestDto consultationRequestDto = new ConsultationRequestDto( idReservation, idPatient, idDoctor, consultationDate, reason, diagnosis, treatment, notes );
+        ConsultationRequestDto consultationRequestDto = new ConsultationRequestDto( idReservation, reason, diagnosis, treatment, notes );
 
         return consultationRequestDto;
     }
@@ -155,9 +149,6 @@ public class ConsultationMapperImpl implements ConsultationMapper {
         ConsultationEntity.ConsultationEntityBuilder consultationEntity = ConsultationEntity.builder();
 
         consultationEntity.reservation( consultationRequestDtoToReservationEntity( requestDto ) );
-        consultationEntity.patient( consultationRequestDtoToUserEntity( requestDto ) );
-        consultationEntity.doctor( consultationRequestDtoToUserEntity1( requestDto ) );
-        consultationEntity.consultationDate( requestDto.consultationDate() );
         consultationEntity.reason( requestDto.reason() );
         consultationEntity.diagnosis( requestDto.diagnosis() );
         consultationEntity.treatment( requestDto.treatment() );
@@ -270,29 +261,5 @@ public class ConsultationMapperImpl implements ConsultationMapper {
         reservationEntity.idReservation( consultationRequestDto.idReservation() );
 
         return reservationEntity.build();
-    }
-
-    protected UserEntity consultationRequestDtoToUserEntity(ConsultationRequestDto consultationRequestDto) {
-        if ( consultationRequestDto == null ) {
-            return null;
-        }
-
-        UserEntity.UserEntityBuilder userEntity = UserEntity.builder();
-
-        userEntity.idUser( consultationRequestDto.idPatient() );
-
-        return userEntity.build();
-    }
-
-    protected UserEntity consultationRequestDtoToUserEntity1(ConsultationRequestDto consultationRequestDto) {
-        if ( consultationRequestDto == null ) {
-            return null;
-        }
-
-        UserEntity.UserEntityBuilder userEntity = UserEntity.builder();
-
-        userEntity.idUser( consultationRequestDto.idDoctor() );
-
-        return userEntity.build();
     }
 }

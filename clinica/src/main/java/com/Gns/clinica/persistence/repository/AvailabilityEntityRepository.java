@@ -30,6 +30,11 @@ public class AvailabilityEntityRepository implements AvailabilityRepository {
     }
 
     @Override
+    public Optional<AvailabilityEntity> findByDoctorAndDate(Long doctorId, LocalDate date) {
+        return this.crudAvailabilityEntity.findByDoctor_IdUserAndDate(doctorId, date);
+    }
+
+    @Override
     public Optional<AvailabilityEntity> findAByDateAndStatus(LocalDate date, AvailabilityStatus availabilityStatus) {
         return this.crudAvailabilityEntity.findByDateAndStatus(date, availabilityStatus);
     }

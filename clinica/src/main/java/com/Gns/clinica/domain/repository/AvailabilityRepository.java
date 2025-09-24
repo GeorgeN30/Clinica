@@ -17,8 +17,10 @@ public interface AvailabilityRepository {
 
     List<AvailabilityEntity> findAll();
     Optional<AvailabilityEntity> findById(long id);
+    Optional<AvailabilityEntity> findByDoctorAndDate(Long doctorId, LocalDate date);
     Optional<AvailabilityEntity> findAByDateAndStatus(LocalDate date, AvailabilityStatus availabilityStatus);
     List<AvailabilityEntity> findAllAvailabilityBetweenDate(LocalDate date, LocalDate date2, AvailabilityStatus availabilityStatus);
     AvailabilityEntity save (AvailabilityEntity availabilityEntity);
+
 
 }

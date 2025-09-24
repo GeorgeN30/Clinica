@@ -45,9 +45,6 @@ public interface ConsultationMapper {
 
 
     @Mapping(source = "reservation.idReservation", target = "idReservation")
-    @Mapping(source = "patient.idUser", target = "idPatient")
-    @Mapping(source = "doctor.idUser", target = "idDoctor")
-    @Mapping(source = "consultationDate", target = "consultationDate")
     @Mapping(source = "reason", target = "reason")
     @Mapping(source = "diagnosis", target = "diagnosis")
     @Mapping(source = "treatment", target = "treatment")

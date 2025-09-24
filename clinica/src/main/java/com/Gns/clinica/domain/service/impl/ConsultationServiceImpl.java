@@ -4,10 +4,7 @@ import com.Gns.clinica.domain.dto.request.ConsultationRequestDto;
 import com.Gns.clinica.domain.dto.response.ConsultationPublicResponseDto;
 import com.Gns.clinica.domain.dto.response.ConsultationResponseDto;
 import com.Gns.clinica.domain.enums.ReservationStatus;
-import com.Gns.clinica.domain.exception.ConsultationNotFoundByDniException;
-import com.Gns.clinica.domain.exception.ConsultationNotFoundByIdException;
-import com.Gns.clinica.domain.exception.ReservationNotFoundByIdException;
-import com.Gns.clinica.domain.exception.UserNotFoundByIdException;
+import com.Gns.clinica.domain.exception.*;
 import com.Gns.clinica.domain.repository.ConsultationRepository;
 import com.Gns.clinica.domain.repository.ReservationRepository;
 import com.Gns.clinica.domain.repository.UserRepository;
@@ -18,6 +15,7 @@ import com.Gns.clinica.persistence.entity.UserEntity;
 import com.Gns.clinica.persistence.mapper.ConsultationMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,13 +23,12 @@ public class ConsultationServiceImpl implements ConsultationService {
     private final ConsultationRepository consultationRepository;
     private final ConsultationMapper consultationMapper;
     private final ReservationRepository reservationRepository;
-    private final UserRepository userRepository;
 
-    public ConsultationServiceImpl(ConsultationRepository consultationRepository, ConsultationMapper consultationMapper, ReservationRepository reservationRepository, UserRepository userRepository) {
+
+    public ConsultationServiceImpl(ConsultationRepository consultationRepository, ConsultationMapper consultationMapper, ReservationRepository reservationRepository) {
         this.consultationRepository = consultationRepository;
         this.consultationMapper = consultationMapper;
         this.reservationRepository = reservationRepository;
-        this.userRepository = userRepository;
     }
 
 
@@ -79,14 +76,15 @@ public class ConsultationServiceImpl implements ConsultationService {
 
     @Override
     public ConsultationPublicResponseDto addConsultation(ConsultationRequestDto consultationRequestDto) {
-        UserEntity patient = userRepository.findById(consultationRequestDto.idPatient())
-                .orElseThrow(() -> new UserNotFoundByIdException(consultationRequestDto.idPatient()));
-
-        UserEntity doctor = userRepository.findById(consultationRequestDto.idDoctor())
-                .orElseThrow(() -> new UserNotFoundByIdException(consultationRequestDto.idDoctor()));
 
         ReservationEntity reservation = reservationRepository.findById(consultationRequestDto.idReservation())
                 .orElseThrow(() -> new ReservationNotFoundByIdException(consultationRequestDto.idReservation()));
+
+
+        UserEntity patient = reservation.getPatient();
+        UserEntity doctor = reservation.getDoctor();
+
+        LocalDate consultationDate = reservation.getAvailability().getDate();
 
         reservation.setStatus(ReservationStatus.COMPLETED);
 
@@ -94,6 +92,7 @@ public class ConsultationServiceImpl implements ConsultationService {
         consultation.setPatient(patient);
         consultation.setDoctor(doctor);
         consultation.setReservation(reservation);
+        consultation.setConsultationDate(consultationDate);
 
         return consultationMapper.toPublicResponseDto(consultationRepository.save(consultation));
     }

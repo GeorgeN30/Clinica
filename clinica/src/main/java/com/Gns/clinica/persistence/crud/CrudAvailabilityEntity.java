@@ -11,4 +11,5 @@ import java.util.Optional;
 public interface CrudAvailabilityEntity extends ListCrudRepository<AvailabilityEntity, Long> {
     Optional<AvailabilityEntity> findByDateAndStatus(LocalDate date, AvailabilityStatus availabilityStatus);
     List<AvailabilityEntity> findByDateBetweenAndStatus(LocalDate date, LocalDate date2, AvailabilityStatus status);
+    Optional<AvailabilityEntity> findByDoctor_IdUserAndDate(Long idUser, LocalDate date);
 }

@@ -146,6 +146,18 @@ public class RestExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
+    @ExceptionHandler(ConsultationInvalidDateException.class)
+    public ResponseEntity<Error> handleException(ConsultationInvalidDateException exception){
+        Error error = new Error("consultation-date", exception.getMessage());
+        return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(DoctorAlreadyHasAvailabilityException.class)
+    public ResponseEntity<Error> handleException(DoctorAlreadyHasAvailabilityException exception){
+        Error error = new Error("doctor-already-has-availability", exception.getMessage());
+        return ResponseEntity.badRequest().body(error);
+    }
+
 
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -19,12 +19,14 @@ import com.Gns.clinica.persistence.entity.ReservationEntity;
 import com.Gns.clinica.persistence.entity.UserEntity;
 import com.Gns.clinica.persistence.mapper.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
+@EnableMethodSecurity(securedEnabled = true)
 @Service
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
@@ -59,6 +61,7 @@ public class ReservationServiceImpl implements ReservationService {
                 .orElseThrow(()-> new ReservationNotFoundByIdException(id));
     }
 
+    @PreAuthorize("#dni == authentication.principal.dni or hasRole('ADMIN')")
     @Override
     public List<ReservationPublicResponseDto> getAllByDoctorDni(String dni, int  maxDays) {
         LocalDate today = LocalDate.now();
@@ -76,6 +79,7 @@ public class ReservationServiceImpl implements ReservationService {
                 .toList();
     }
 
+    @PreAuthorize("#dni == authentication.principal.dni or hasRole('ADMIN')")
     @Override
     public ReservationPublicResponseDto getPublicReservationByDni(String dni) {
         return this.reservationRepository.findPublicReservationByDni(dni)

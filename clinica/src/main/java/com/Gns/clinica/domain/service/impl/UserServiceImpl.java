@@ -13,19 +13,24 @@ import com.Gns.clinica.domain.service.interfaces.UserService;
 import com.Gns.clinica.persistence.entity.UserEntity;
 import com.Gns.clinica.persistence.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@EnableMethodSecurity(securedEnabled = true)
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -36,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
         userEntity.setRole(Role.PATIENT);
         userEntity.setStatus(UserStatus.ACTIVE);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setDisabled(false);
         userEntity.setLocked(false);
 
@@ -51,6 +57,7 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = userMapper.toEntity(userRequestDto);
 
         userEntity.setStatus(UserStatus.ACTIVE);
+        userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
         userEntity.setDisabled(false);
         userEntity.setLocked(false);
 
@@ -98,6 +105,7 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
+    @PreAuthorize("#dni == authentication.principal.dni or hasRole('ADMIN')")
     @Override
     public UserPublicResponseDto getFirstByDni(String dni) {
         return this.userRepository.findFirstByDni(dni)

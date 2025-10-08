@@ -93,6 +93,7 @@
 	</dependencies>
 
 	<build>
+        <finalName>clinica-api-gns</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
